@@ -1,0 +1,69 @@
+********************************************************************************
+*                         TWITTER API ME 1.8 - READ ME                         *
+********************************************************************************
+*                         http://www.twitterapime.com                          *
+********************************************************************************
+
+ DESCRIPTION:
+********************************************************************************
+Twitter API ME defines a compelling and well defined API for Java developers
+who wish to access Twitter's services. This project provides support for the
+main and more popular services on Twitter, e.g., searching and "tweet" posting.
+More services are added as new versions are released.
+
+Twitter API ME is defined in such a way that developers will learn how to use it
+quickly. In addition, the API is structured to work regardless of the underlying
+Java platform (e.g. Java ME, Android and RIM), in order to make easier and 
+quicker for the developers to port their applications to other platforms.
+
+ MINIMUM REQUIREMENTS:
+********************************************************************************
++ Runtime Environment
+  - Java ME: MIDP 2.0 / CLDC 1.0
+  - Android 1.5 (API Level 3)
+  - RIM OS 4.6
+
++ Development Environment
+  - Java SDK 1.6
+  - Java ME platform SDK 3.0, WTK 2.5.2 or any other compatible Java ME SDK
+  - Android SDK 1.1 or newer.
+  - Java Preprocessor (e.g. Antenna Preprocessor Plug-in for Eclipse)
+  - BlackBerry Java SDK v4.5 or newer.
+  - JUnit 3
+
+ AVAILABLE IN THIS VERSION:
+********************************************************************************
+- OAuth support all platforms (callback url and out-of-band mode).
+- Possibility to configure additional connection parameters for RIM platform.
+- Improved RIM connection string solving the issue of when the devices is 
+  subscribed to BIS, but no APN was enabled and specified. In this case, an 
+  IOException was thrown.
+- Geo-located Trend search based on Yahoo! Where On Earth ID.
+- Bug fixes and replacement of some deprecated Twitter API's resources.
+
+ KNOWN BUGS IN THIS VERSION:
+********************************************************************************
+- None
+
+ REMARKS:
+********************************************************************************
+- From this version on the release's jar file is being preverified again for 
+  Java ME and RIM platforms. In case of RIM, the libraries as well.
+  
+ COMING NEXT VERSION: 1.9
+********************************************************************************
+- Let us know what you need.
+
+ PREPROCESSOR DIRECTIVES:
+********************************************************************************
+- If you intend to work with the API's source code directly, you need to know
+  that this code contains some preprocessing directives, in order to manage the
+  proper compilation for each target platform. Currently, the code is prepared
+  for Java ME, Android and RIM, since they are target platforms of Twitter API
+  ME.
+  
+  Before compiling the source code, you need to specify which platform this
+  compilation is for in your IDE. For instance, you can use Antenna Preprocessor
+  Plug-in for Eclipse for that. In case you want to compile for Java ME, use the
+  directive PP_JAVA_ME. For Android, use PP_ANDROID. For RIM, use PP_RIM.
+  Otherwise, your binaries may present some strange behaviors during runtime.
