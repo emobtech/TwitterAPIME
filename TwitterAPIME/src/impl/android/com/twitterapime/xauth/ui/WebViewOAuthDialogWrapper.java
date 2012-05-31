@@ -8,6 +8,7 @@
 package impl.android.com.twitterapime.xauth.ui;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -136,7 +137,13 @@ public final class WebViewOAuthDialogWrapper extends OAuthDialogWrapper {
 		 * @see android.webkit.WebViewClient#onPageStarted(android.webkit.WebView, java.lang.String, android.graphics.Bitmap)
 		 */
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			trackUrl(url);
+			new AsyncTask() {
+				protected Object doInBackground(Object[] params) {
+					trackUrl(params[0].toString());
+					//
+					return params[0];
+				}
+			}.execute(new Object[] {url});
 		}
 	}
 }
