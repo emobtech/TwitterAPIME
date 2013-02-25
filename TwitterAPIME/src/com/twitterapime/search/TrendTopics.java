@@ -80,6 +80,7 @@ public final class TrendTopics {
 	 * </p>
 	 * @see TrendTopics#setServiceURL(String, String)
 	 * @see TrendTopics#searchDailyTopics(Query)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_TRENDS_DAILY =
 		"TWITTER_API_URL_SERVICE_TRENDS_DAILY";
@@ -95,6 +96,7 @@ public final class TrendTopics {
 	 * </p>
 	 * @see TrendTopics#setServiceURL(String, String)
 	 * @see TrendTopics#searchWeeklyTopics(Query)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_TRENDS_WEEKLY =
 		"TWITTER_API_URL_SERVICE_TRENDS_WEEKLY";
@@ -111,6 +113,7 @@ public final class TrendTopics {
 	 * @see TrendTopics#setServiceURL(String, String)
 	 * @see TrendTopics#searchNowTopics(Query)
 	 * @see TrendTopics#searchNowTopics(String, Query)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_TRENDS_WOEID =
 		"TWITTER_API_URL_SERVICE_TRENDS_WOEID";
@@ -134,6 +137,7 @@ public final class TrendTopics {
 	 * Get a single instance of TrendTopics class.
 	 * </p>
 	 * @return TrendTopics single instance.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public static synchronized TrendTopics getInstance() {
 		if (singleInstance == null) {
@@ -186,6 +190,7 @@ public final class TrendTopics {
 	 * @return Most recent topics.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Topic[] searchNowTopics(Query query) throws IOException,
 		LimitExceededException {
@@ -209,6 +214,7 @@ public final class TrendTopics {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If woeid is null/empty.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Topic[] searchNowTopics(String woeid, Query query)
 		throws IOException, LimitExceededException {
@@ -258,6 +264,7 @@ public final class TrendTopics {
 	 * @return Daily topics.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Topic[] searchDailyTopics(Query query) throws IOException,
 		LimitExceededException {
@@ -280,6 +287,7 @@ public final class TrendTopics {
 	 * @return Weekly topics.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Topic[] searchWeeklyTopics(Query query) throws IOException,
 		LimitExceededException {

@@ -18,7 +18,7 @@ import java.io.OutputStream;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  * @see HttpConnector
  */
@@ -123,7 +123,15 @@ public interface HttpConnection {
 	 * the request. 
 	 * </p> 
 	 */
-	public static final int HTTP_BAD_GATEWAY  = 502;
+	public static final int HTTP_BAD_GATEWAY = 502;
+
+	/**
+	 * <p>
+	 * 429: The server indicates that the user has sent too many requests in a 
+	 * given amount of time ("rate limiting"). 
+	 * </p> 
+	 */
+	public static final int HTTP_TOO_MANY_REQUESTS = 429;
 
 	/**
 	 * <p>

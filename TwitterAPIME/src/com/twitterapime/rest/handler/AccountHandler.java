@@ -94,7 +94,6 @@ public final class AccountHandler extends DefaultXMLHandler {
 			userAccountValues = new Hashtable(25);
 			lastTweetValues = new Hashtable(5);
 			//
-			//
 			usersHashList.addElement(userAccountValues);
 			usersList.addElement(new UserAccount(userAccountValues));
 		}

@@ -9,7 +9,7 @@ package com.twitterapime.io;
 
 import java.io.IOException;
 
-import com.twitterapime.io.handler.HttpResponseCodeErrorHandler;
+import com.twitterapime.io.handler.json.HttpResponseCodeErrorJSONHandler;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserFactory;
 import com.twitterapime.search.InvalidQueryException;
@@ -23,7 +23,7 @@ import com.twitterapime.util.StringUtil;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.3
+ * @version 1.4
  * @since 1.1
  * @see LimitExceededException
  * @see InvalidQueryException
@@ -64,12 +64,7 @@ public final class HttpResponseCodeInterpreter {
 				throw new InvalidQueryException(getErrorMessage(response));
 			} else if (isLimitExceededError(respCode)) {
 				String emgs = getErrorMessage(response);
-				String raft =
-					response.getResponseField("X-FeatureRateLimit-Reset");
-				//
-				if (StringUtil.isEmpty(raft)) {
-					raft = response.getResponseField("Retry-After");
-				}
+				String raft = response.getResponseField("X-Rate-Limit-Reset");
 				//
 				if (!StringUtil.isEmpty(raft)) {
 					emgs += " / Retry after " + raft + " secs.";
@@ -96,14 +91,14 @@ public final class HttpResponseCodeInterpreter {
 		throws IOException {
 		String errorMsg = null;
 		//
-		Parser parser = ParserFactory.getDefaultParser();
-		HttpResponseCodeErrorHandler handler =
-			new HttpResponseCodeErrorHandler();
+		Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+		HttpResponseCodeErrorJSONHandler handler =
+			new HttpResponseCodeErrorJSONHandler();
 		//
 		try {
 			parser.parse(response.getStream(), handler);
 			//
-			errorMsg = handler.getParsedErrorMessage();
+			errorMsg = handler.getMessage();
 		} catch (Exception e) {
 			errorMsg = "HTTP ERROR CODE: " + response.getCode();
 		}
@@ -119,7 +114,8 @@ public final class HttpResponseCodeInterpreter {
 	 * @return true if the response-code represents a limit exceeded error.
 	 */
 	static boolean isLimitExceededError(int code) {
-		return code == HttpConnection.HTTP_BAD_REQUEST
+		return code == HttpConnection.HTTP_TOO_MANY_REQUESTS 
+				|| code == HttpConnection.HTTP_BAD_REQUEST
 				|| code == HttpConnection.HTTP_FORBIDDEN
 				|| code == CUSTOM_HTTP_CODE_ENHANCE_YOUR_CALM;
 	}
