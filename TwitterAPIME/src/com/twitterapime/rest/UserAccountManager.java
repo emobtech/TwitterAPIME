@@ -20,8 +20,8 @@ import com.twitterapime.model.MetadataSet;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserException;
 import com.twitterapime.parser.ParserFactory;
-import com.twitterapime.rest.handler.AccountHandler;
 import com.twitterapime.rest.handler.RateLimitStatusHandler;
+import com.twitterapime.rest.handler.json.UserJSONHandler;
 import com.twitterapime.search.LimitExceededException;
 import com.twitterapime.search.Query;
 import com.twitterapime.search.QueryComposer;
@@ -44,7 +44,7 @@ import com.twitterapime.xauth.XAuthSigner;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.6
+ * @version 1.7
  * @since 1.1
  */
 public final class UserAccountManager {
@@ -68,8 +68,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service account verify credentials.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/account/verify_credentials" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/account/verify_credentials
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -83,8 +83,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service OAuth access token.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/oauth/access_token" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/oauth/access_token
+	 * <a href="https://dev.twitter.com/docs/api/1/post/oauth/access_token" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1/post/oauth/access_token
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -104,6 +104,7 @@ public final class UserAccountManager {
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
 	 * @see UserAccountManager#getRateLimitStatus()
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_ACCOUNT_RATE_LIMIT_STATUS =
 		"TWITTER_API_URL_SERVICE_ACCOUNT_RATE_LIMIT_STATUS";
@@ -113,8 +114,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service users show.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/users/show" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/users/show
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/users/show" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/users/show
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -128,8 +129,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service account update profile.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/account/update_profile" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/account/update_profile
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/account/update_profile" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/account/update_profile
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -143,8 +144,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service report spam.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/report_spam" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/report_spam
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/users/report_spam" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/users/report_spam
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -158,8 +159,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service users search.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/users/search" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/users/search
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/users/search" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/users/search
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -173,8 +174,8 @@ public final class UserAccountManager {
 	 * Key for Twitter API URL service users lookup.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/users/lookup" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/users/lookup
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/users/lookup" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/users/lookup
 	 * </a>
 	 * </p>
 	 * @see UserAccountManager#setServiceURL(String, String)
@@ -188,7 +189,7 @@ public final class UserAccountManager {
 		//
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_ACCOUNT_VERIFY_CREDENTIALS,
-			"http://api.twitter.com/1/account/verify_credentials.xml");
+			"https://api.twitter.com/1.1/account/verify_credentials.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_OAUTH_ACCESS_TOKEN,
 			"https://api.twitter.com/oauth/access_token");
@@ -197,19 +198,19 @@ public final class UserAccountManager {
 			"http://api.twitter.com/1/account/rate_limit_status.xml");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_USERS_SHOW,
-			"http://api.twitter.com/1/users/show.xml");
+			"https://api.twitter.com/1.1/users/show.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_ACCOUNT_UPDATE_PROFILE,
-			"http://api.twitter.com/1/account/update_profile.xml");
+			"https://api.twitter.com/1.1/account/update_profile.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_REPORT_SPAM,
-			"http://api.twitter.com/1/report_spam.xml");
+			"https://api.twitter.com/1.1/users/report_spam.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_USERS_SEARCH,
-			"http://api.twitter.com/1/users/search.xml");
+			"https://api.twitter.com/1.1/users/search.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_USERS_LOOKUP,
-			" http://api.twitter.com/1/users/lookup.xml");
+			"https://api.twitter.com/1.1/users/lookup.json");
 	}
 
 	/**
@@ -342,6 +343,7 @@ public final class UserAccountManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws SecurityException If it is not properly logged in.
 	 * @throws LimitExceededException If limit has been hit.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public RateLimitStatus getRateLimitStatus() throws IOException,
 		LimitExceededException {
@@ -435,8 +437,8 @@ public final class UserAccountManager {
 			HttpResponse resp = req.send();
 			//
 			if (resp.getCode() == HttpConnection.HTTP_OK) {
-				AccountHandler handler = new AccountHandler();
-				Parser parser = ParserFactory.getDefaultParser();
+				UserJSONHandler handler = new UserJSONHandler();
+				Parser parser = ParserFactory.getParser(ParserFactory.JSON);
 				parser.parse(resp.getStream(), handler);
 				UserAccount ua = handler.getParsedUserAccounts()[0];
 				//
@@ -555,8 +557,8 @@ public final class UserAccountManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			handler.loadParsedUserAccount(user, 0);
@@ -697,6 +699,8 @@ public final class UserAccountManager {
 	 */
 	public List[] getLists() throws IOException,
 		LimitExceededException {
+		checkValid();
+		//
 		return ListManager.getInstance(this).getLists();
 	}
 	
@@ -705,6 +709,8 @@ public final class UserAccountManager {
 	 */
 	public List[] getListSubscriptions() throws IOException,
 		LimitExceededException {
+		checkValid();
+		//
 		return ListManager.getInstance(this).getSubscriptions();
 	}
 	
@@ -793,8 +799,8 @@ public final class UserAccountManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			handler.loadParsedUserAccount(newUserInfo, 0);
@@ -839,8 +845,8 @@ public final class UserAccountManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			handler.loadParsedUserAccount(user, 0);
@@ -908,8 +914,8 @@ public final class UserAccountManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			return handler.getParsedUserAccounts();
@@ -1008,8 +1014,8 @@ public final class UserAccountManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			return handler.getParsedUserAccounts();

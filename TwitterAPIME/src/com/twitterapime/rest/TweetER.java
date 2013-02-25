@@ -19,8 +19,7 @@ import com.twitterapime.model.MetadataSet;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserException;
 import com.twitterapime.parser.ParserFactory;
-import com.twitterapime.rest.handler.DirectMessageHandler;
-import com.twitterapime.rest.handler.StatusHandler;
+import com.twitterapime.rest.handler.json.StatusJSONHandler;
 import com.twitterapime.search.InvalidQueryException;
 import com.twitterapime.search.LimitExceededException;
 import com.twitterapime.search.Tweet;
@@ -41,13 +40,11 @@ import com.twitterapime.util.StringUtil;
  *   Tweet t = ter.post(new Tweet("status message"));
  * }
  * ...
- * TweetER ter = TweetER.getInstance();
- * Tweet t = ter.findByID("12635687984");
  * </pre>
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.5
+ * @version 1.6
  * @since 1.1
  * @see Tweet
  * @see UserAccountManager
@@ -79,8 +76,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service statuses update.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/statuses/update" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/statuses/update
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/statuses/update" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/statuses/update
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -94,8 +91,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service statuses show.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/show/%3Aid
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/show/%3Aid" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/statuses/show/%3Aid
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -109,8 +106,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service statuses retweet.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/statuses/retweet/%3Aid
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/statuses/retweet/%3Aid" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/statuses/retweet/%3Aid
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -124,8 +121,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service direct messages new.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/direct_messages/new" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/direct_messages/new
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/direct_messages/new" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/direct_messages/new
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -139,8 +136,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service to favorite tweet.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/favorites/create/%3Aid
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/favorites/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/favorites/create
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -154,8 +151,8 @@ public final class TweetER {
 	 * Key for Twitter API URL service to unfavorite tweet.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/favorites/destroy/%3Aid
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/favorites/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/favorites/destroy
 	 * </a>
 	 * </p>
 	 * @see TweetER#setServiceURL(String, String)
@@ -169,22 +166,22 @@ public final class TweetER {
 		//
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_UPDATE,
-			"http://api.twitter.com/1/statuses/update.xml");
+			"https://api.twitter.com/1.1/statuses/update.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_SHOW,
-			"http://api.twitter.com/1/statuses/show.xml");
+			"https://api.twitter.com/1.1/statuses/show.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_RETWEET,
-			"http://api.twitter.com/1/statuses/retweet/");
+			"https://api.twitter.com/1.1/statuses/retweet/");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_DIRECT_MESSAGES_NEW,
-			"http://api.twitter.com/1/direct_messages/new.xml");
+			"https://api.twitter.com/1.1/direct_messages/new.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FAVORITES_CREATE,
-			"http://api.twitter.com/1/favorites/create/:id.xml");
+			"https://api.twitter.com/1.1/favorites/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FAVORITES_DESTROY,
-			"http://api.twitter.com/1/favorites/destroy/:id.xml");
+			"https://api.twitter.com/1.1/favorites/destroy.json");
 	}
 	
 	/**
@@ -282,6 +279,7 @@ public final class TweetER {
 	 * user account.
 	 * </p>
 	 * @return TweetER single instance.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public synchronized static TweetER getInstance() {
 		if (singleInstance == null) {
@@ -333,7 +331,8 @@ public final class TweetER {
 	 * @return Tweet.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IOException If an I/O error occurs.
-	 * @throws SecurityException If the requested tweet is protected.
+	 * @throws SecurityException If it is not properly logged in and/or tweet is
+	 *                           protected.
 	 * @throws IllegalArgumentException If the given ID is empty/null.
 	 */
 	public Tweet findByID(String id) throws LimitExceededException,
@@ -342,16 +341,12 @@ public final class TweetER {
 			throw new IllegalArgumentException("ID must not be empty/null.");
 		}
 		//
+		checkUserAuth();
+		//
 		String queryStr = "?id=" +id + "&include_entities=true";
 		String url = getURL(TWITTER_API_URL_SERVICE_STATUSES_SHOW) + queryStr;
 		//
-		HttpRequest req;
-		if (userAccountMngr != null) {
-			checkUserAuth();
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		try {
 			HttpResponse resp = req.send();
@@ -364,11 +359,11 @@ public final class TweetER {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			StatusHandler handler = new StatusHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			StatusJSONHandler handler = new StatusJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
-			return handler.getParsedTweet();
+			return handler.getParsedTweets()[0];
 		} catch (ParserException e) {
 			throw new IOException(e.getMessage());
 		} finally {
@@ -433,10 +428,10 @@ public final class TweetER {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			StatusHandler handler = new StatusHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			StatusJSONHandler handler = new StatusJSONHandler();
 			parser.parse(resp.getStream(), handler);
-			handler.loadParsedTweet(tweet);
+			handler.loadParsedTweet(tweet, 0);
 			//
 			return tweet;
 		} catch (ParserException e) {
@@ -471,7 +466,8 @@ public final class TweetER {
 		//
 		checkUserAuth();
 		//
-		String url = getURL(TWITTER_API_URL_SERVICE_STATUSES_RETWEET)+id+".xml";
+		String url =
+			getURL(TWITTER_API_URL_SERVICE_STATUSES_RETWEET) + id + ".json";
 		//
 		HttpRequest req = userAccountMngr.createRequest(url);
 		req.setMethod(HttpConnection.POST);
@@ -483,10 +479,10 @@ public final class TweetER {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			StatusHandler handler = new StatusHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			StatusJSONHandler handler = new StatusJSONHandler();
 			parser.parse(resp.getStream(), handler);
-			handler.loadParsedTweet(tweet);
+			handler.loadParsedTweet(tweet, 0);
 			//
 			return tweet;
 		} catch (ParserException e) {
@@ -541,8 +537,8 @@ public final class TweetER {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			DirectMessageHandler handler = new DirectMessageHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			StatusJSONHandler handler = new StatusJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			handler.loadParsedTweet(dm, 0);
 			//
@@ -588,11 +584,10 @@ public final class TweetER {
 			url = getURL(TWITTER_API_URL_SERVICE_FAVORITES_DESTROY);
 		}
 		//
-		url = StringUtil.replace(url, ":id", id);
-		//
 		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		req.setMethod(HttpConnection.POST);
+		req.setBodyParameter("id", id);
 		req.setBodyParameter("include_entities", "true");
 		//
 		try {
@@ -600,11 +595,11 @@ public final class TweetER {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			StatusHandler handler = new StatusHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			StatusJSONHandler handler = new StatusJSONHandler();
 			//
 			parser.parse(resp.getStream(), handler);
-			handler.loadParsedTweet(tweet);
+			handler.loadParsedTweet(tweet, 0);
 			//
 			return tweet;
 		} catch (ParserException e) {

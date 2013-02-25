@@ -11,7 +11,8 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import com.twitterapime.model.MetadataSet;
-import com.twitterapime.parser.DefaultXMLHandler;
+import com.twitterapime.parser.JSONArray;
+import com.twitterapime.parser.JSONObject;
 import com.twitterapime.search.TweetEntity;
 
 /**
@@ -20,10 +21,10 @@ import com.twitterapime.search.TweetEntity;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.1
+ * @version 1.2
  * @since 1.5
  */
-public final class TweetEntityHandler extends DefaultXMLHandler {
+public final class TweetEntityHandler {
 	/**
 	 * <p>
 	 * Hold user data from mentions tag.
@@ -110,6 +111,116 @@ public final class TweetEntityHandler extends DefaultXMLHandler {
 			t.put(MetadataSet.TWEETENTITY_HASHTAG, text);
 			//
 			v.addElement(new TweetEntity(t));
+		}
+	}
+	
+	/**
+	 * <p>
+	 * Populate the given hash according to the keys and their values
+	 * </p>
+	 * @param data Hash to be populated.
+	 * @param jsonObj JSON object that contains tweet's data.
+	 */
+	public void populate(Hashtable data, JSONObject jsonObj) {
+		if (jsonObj.has("user_mentions")) {
+			JSONArray jsonMentions = jsonObj.getJSONArray("user_mentions");
+			Vector mentions = new Vector(jsonMentions.length());
+			//
+			for (int i = 0; i < jsonMentions.length(); i++) {
+				JSONObject obj = jsonMentions.getJSONObject(i);
+				Hashtable t = new Hashtable();
+				//
+				putIf(t, MetadataSet.TWEETENTITY_USERACCOUNT_ID, obj, "id");
+				putIf(t, MetadataSet.TWEETENTITY_USERACCOUNT_USER_NAME, obj, "screen_name");
+				putIf(t, MetadataSet.TWEETENTITY_USERACCOUNT_NAME, obj, "name");
+				//
+				if (t.size() > 0) {
+					mentions.add(new TweetEntity(t));
+				}
+			}
+			//
+			if (mentions.size() > 0) {
+				data.put(MetadataSet.TWEETENTITY_MENTIONS, mentions);
+			}
+		}
+		//
+		if (jsonObj.has("media")) {
+			JSONArray jsonMedias = jsonObj.getJSONArray("media");
+			Vector medias = new Vector(jsonMedias.length());
+			//
+			for (int i = 0; i < jsonMedias.length(); i++) {
+				JSONObject obj = jsonMedias.getJSONObject(i);
+				Hashtable t = new Hashtable();
+				//
+				putIf(t, MetadataSet.TWEETENTITY_MEDIA, obj, "media_url");
+				putIf(t, MetadataSet.TWEETENTITY_DISPLAY_URL, obj, "display_url");
+				//
+				if (t.size() > 0) {
+					medias.add(new TweetEntity(t));
+				}
+			}
+			//
+			if (medias.size() > 0) {
+				data.put(MetadataSet.TWEETENTITY_MEDIAS, medias);
+			}
+		}
+		//
+		if (jsonObj.has("urls")) {
+			JSONArray jsonUrls = jsonObj.getJSONArray("urls");
+			Vector urls = new Vector(jsonUrls.length());
+			//
+			for (int i = 0; i < jsonUrls.length(); i++) {
+				JSONObject obj = jsonUrls.getJSONObject(i);
+				Hashtable t = new Hashtable();
+				//
+				putIf(t, MetadataSet.TWEETENTITY_URL, obj, "url");
+				putIf(t, MetadataSet.TWEETENTITY_DISPLAY_URL, obj, "display_url");
+				putIf(t, MetadataSet.TWEETENTITY_EXPANDED_URL, obj, "expanded_url");
+				//
+				if (t.size() > 0) {
+					urls.add(new TweetEntity(t));
+				}
+			}
+			//
+			if (urls.size() > 0) {
+				data.put(MetadataSet.TWEETENTITY_URLS, urls);
+			}
+		}
+		//
+		if (jsonObj.has("hashtags")) {
+			JSONArray jsonHashtags = jsonObj.getJSONArray("hashtags");
+			Vector hashtags = new Vector(jsonHashtags.length());
+			//
+			for (int i = 0; i < jsonHashtags.length(); i++) {
+				JSONObject obj = jsonHashtags.getJSONObject(i);
+				Hashtable t = new Hashtable();
+				//
+				putIf(t, MetadataSet.TWEETENTITY_HASHTAG, obj, "text");
+				//
+				if (t.size() > 0) {
+					hashtags.add(new TweetEntity(t));
+				}
+			}
+			//
+			if (hashtags.size() > 0) {
+				data.put(MetadataSet.TWEETENTITY_HASHTAGS, hashtags);
+			}
+		}
+	}
+	
+	/**
+	 * <p>
+	 * Put the given key's value in hash table if present in json object.
+	 * </p>
+	 * @param data Table.
+	 * @param dataKey Table's key.
+	 * @param jsonObj JSON object.
+	 * @param jsonKey JSON's key.
+	 */
+	private void putIf(Hashtable data, String dataKey, JSONObject jsonObj,
+		String jsonKey) {
+		if (jsonObj.has(jsonKey)) {
+			data.put(dataKey, jsonObj.getString(jsonKey));
 		}
 	}
 	

@@ -18,8 +18,8 @@ import com.twitterapime.model.MetadataSet;
 import com.twitterapime.parser.Handler;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserFactory;
-import com.twitterapime.rest.handler.DirectMessageHandler;
 import com.twitterapime.rest.handler.TimelineHandler;
+import com.twitterapime.rest.handler.json.StatusJSONHandler;
 import com.twitterapime.search.Query;
 import com.twitterapime.search.QueryComposer;
 import com.twitterapime.search.SearchDeviceListener;
@@ -52,7 +52,7 @@ import com.twitterapime.util.StringUtil;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.5
+ * @version 1.6
  * @since 1.2
  * @see UserAccountManager
  * @see SearchDeviceListener
@@ -91,6 +91,7 @@ public final class Timeline {
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
 	 * @see Timeline#startGetPublicTweets(SearchDeviceListener)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_STATUSES_PUBLIC_TIMELINE =
 		"TWITTER_API_URL_SERVICE_STATUSES_PUBLIC_TIMELINE";
@@ -100,8 +101,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service statuses home timeline.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/home_timeline" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/home_timeline
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -115,8 +116,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service statuses user timeline.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/user_timeline" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/user_timeline
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -130,8 +131,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service statuses mentions.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/mentions" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/mentions
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -145,8 +146,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service statuses retweets of me.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -166,6 +167,7 @@ public final class Timeline {
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
 	 * @see Timeline#startGetRetweetsByMe(Query, SearchDeviceListener)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_STATUSES_RETWEETED_BY_ME
 		= "TWITTER_API_URL_SERVICE_STATUSES_RETWEETED_BY_ME";
@@ -181,6 +183,7 @@ public final class Timeline {
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
 	 * @see Timeline#startGetRetweetsToMe(Query, SearchDeviceListener)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_STATUSES_RETWEETED_TO_ME
 		= "TWITTER_API_URL_SERVICE_STATUSES_RETWEETED_TO_ME";
@@ -190,8 +193,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service direct messages.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/direct_messages" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/direct_messages
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/direct_messages" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/direct_messages
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -205,8 +208,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service direct messages sent.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/direct_messages/sent" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/direct_messages/sent
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/direct_messages/sent" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/direct_messages/sent
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -234,6 +237,11 @@ public final class Timeline {
 	 * <p>
 	 * Key for Twitter API URL service favorite statuses.
 	 * </p>
+	 * <p>
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/favorites/list" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/favorites/list
+	 * </a>
+	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
 	 * @see Timeline#startGetFavoriteTweets(Query, SearchDeviceListener)
 	 * @see Timeline#startGetFavoriteTweets(UserAccount, Query, SearchDeviceListener)
@@ -246,8 +254,8 @@ public final class Timeline {
 	 * Key for Twitter API URL service user lists statuses.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/lists/statuses" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/lists/statuses
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/lists/statuses" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/lists/statuses
 	 * </a>
 	 * </p>
 	 * @see Timeline#setServiceURL(String, String)
@@ -264,22 +272,22 @@ public final class Timeline {
 			"http://api.twitter.com/1/statuses/public_timeline.xml");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_HOME_TIMELINE,
-			"http://api.twitter.com/1/statuses/home_timeline.xml");
+			"https://api.twitter.com/1.1/statuses/home_timeline.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_USER_TIMELINE,
-			"http://api.twitter.com/1/statuses/user_timeline.xml");
+			"https://api.twitter.com/1.1/statuses/user_timeline.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_MENTIONS,
-			"http://api.twitter.com/1/statuses/mentions.xml");
+			"https://api.twitter.com/1.1/statuses/mentions_timeline.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_DIRECT_MESSAGES,
-			"http://api.twitter.com/1/direct_messages.xml");
+			"https://api.twitter.com/1.1/direct_messages.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_DIRECT_MESSAGES_SENT,
-			"http://api.twitter.com/1/direct_messages/sent.xml");
+			"https://api.twitter.com/1.1/direct_messages/sent.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_RETWEETS_OF_ME,
-			"http://api.twitter.com/1/statuses/retweets_of_me.xml");
+			"https://api.twitter.com/1.1/statuses/retweets_of_me.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_RETWEETED_BY_ME,
 			"http://api.twitter.com/1/statuses/retweeted_by_me.xml");
@@ -288,10 +296,10 @@ public final class Timeline {
 			"http://api.twitter.com/1/statuses/retweeted_to_me.xml");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FAVORITES,
-			"http://api.twitter.com/1/favorites/:id.xml");
+			"https://api.twitter.com/1.1/favorites/list.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_STATUSES,
-			"http://api.twitter.com/1/lists/statuses.xml");
+			"https://api.twitter.com/1.1/lists/statuses.json");
 	}
 	
 	/**
@@ -394,6 +402,7 @@ public final class Timeline {
 	 * user account.
 	 * </p>
 	 * @return Timeline single instance.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public synchronized static Timeline getInstance() {
 		if (singleInstance == null) {
@@ -453,6 +462,7 @@ public final class Timeline {
 	 * </p>
 	 * @param l Listener object to be notified about the search's result.
 	 * @throws IllegalArgumentException If listener is null.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public void startGetPublicTweets(SearchDeviceListener l) {
 		TimelineHandler h = new TimelineHandler();
@@ -495,7 +505,7 @@ public final class Timeline {
 	 * @throws IllegalArgumentException If listener is null.
 	 */
 	public void startGetHomeTweets(Query q, SearchDeviceListener l) {
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		startGet(TWITTER_API_URL_SERVICE_STATUSES_HOME_TIMELINE, q, l, h, true);
@@ -533,7 +543,7 @@ public final class Timeline {
 	 * @throws IllegalArgumentException If listener is null.
 	 */
 	public void startGetUserTweets(Query q, SearchDeviceListener l) {
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		startGet(TWITTER_API_URL_SERVICE_STATUSES_USER_TIMELINE, q, l, h, true);
@@ -568,7 +578,7 @@ public final class Timeline {
 	 * @throws IllegalArgumentException If listener is null.
 	 */
 	public void startGetMentions(Query q, SearchDeviceListener l) {
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		startGet(TWITTER_API_URL_SERVICE_STATUSES_MENTIONS, q, l, h, true);
@@ -607,7 +617,7 @@ public final class Timeline {
 			received
 				? TWITTER_API_URL_SERVICE_DIRECT_MESSAGES
 				: TWITTER_API_URL_SERVICE_DIRECT_MESSAGES_SENT;
-		DirectMessageHandler h = new DirectMessageHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		startGet(urlKey, q, l, h, true);
@@ -639,6 +649,7 @@ public final class Timeline {
 	 * @param l Listener object to be notified about the search's result.
 	 * @throws SecurityException If it is not authenticated.
 	 * @throws IllegalArgumentException If listener is null.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public void startGetRetweetsByMe(Query q, SearchDeviceListener l) {
 		TimelineHandler h = new TimelineHandler();
@@ -673,6 +684,7 @@ public final class Timeline {
 	 * @param l Listener object to be notified about the search's result.
 	 * @throws SecurityException If it is not authenticated.
 	 * @throws IllegalArgumentException If listener is null.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public void startGetRetweetsToMe(Query q, SearchDeviceListener l) {
 		TimelineHandler h = new TimelineHandler();
@@ -709,7 +721,7 @@ public final class Timeline {
 	 * @throws IllegalArgumentException If listener is null.
 	 */
 	public void startGetRetweetsOfMe(Query q, SearchDeviceListener l) {
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		startGet(TWITTER_API_URL_SERVICE_STATUSES_RETWEETS_OF_ME, q, l, h,true);
@@ -739,7 +751,7 @@ public final class Timeline {
 	 * @param list List object.
 	 * @param q The filter query. If null all tweets are returned.
 	 * @param l Listener object to be notified about the search's result.
-	 * @throws SecurityException If the list is private and the user is not
+	 * @throws SecurityException If the list is private or the user is not
 	 *                           authenticated.
 	 * @throws IllegalArgumentException If List and/or listener is null.
 	 */
@@ -750,7 +762,7 @@ public final class Timeline {
 		//
 		list.checkEmpty(MetadataSet.LIST_ID);
 		//
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		String url = getURL(TWITTER_API_URL_SERVICE_LISTS_STATUSES);
@@ -762,7 +774,7 @@ public final class Timeline {
 			q = qry;
 		}
 		//
-		startGet(url, q, l, h, userAccountMngr != null);
+		startGet(url, q, l, h, true);
 	}
 
 	/**
@@ -790,8 +802,6 @@ public final class Timeline {
 	 * @throws IllegalArgumentException If listener is null.
 	 */
 	public void startGetFavoriteTweets(Query q, SearchDeviceListener l) {
-		checkUserAuth();
-		//
 		String username =
 			userAccountMngr.getCredential().getString(
 				MetadataSet.CREDENTIAL_USERNAME);
@@ -821,7 +831,8 @@ public final class Timeline {
 	 * @param user User account.
 	 * @param q The filter query. If null all tweets are returned.
 	 * @param l Listener object to be notified about the search's result.
-	 * @throws SecurityException If the given user is protected.
+	 * @throws SecurityException If the given user is protected or user is not 
+	 *                           authenticated.
 	 * @throws IllegalArgumentException If user or listener is null.
 	 */
 	public void startGetFavoriteTweets(UserAccount user, Query q,
@@ -830,22 +841,21 @@ public final class Timeline {
 			throw new IllegalArgumentException("User must not be null");
 		}
 		//
-		String id = user.getString(MetadataSet.USERACCOUNT_ID);
-		//
-		if (StringUtil.isEmpty(id)) {
+		if (StringUtil.isEmpty(user.getString(MetadataSet.USERACCOUNT_ID))) {
 			user.checkEmpty(MetadataSet.USERACCOUNT_USER_NAME);
-			//
-			id = user.getString(MetadataSet.USERACCOUNT_USER_NAME);
 		}
 		//
-		TimelineHandler h = new TimelineHandler();
+		StatusJSONHandler h = new StatusJSONHandler();
 		h.setSearchDeviceListener(l);
 		//
 		String url = getURL(TWITTER_API_URL_SERVICE_FAVORITES);
 		//
-		url = StringUtil.replace(url, ":id", id);
+		String[] pv = user.getUserNameOrIDParamValue();
+		String param = "?" + pv[0] + "=" + pv[1];
 		//
-		startGet(url, q, l, h, false);
+		url += param;
+		//
+		startGet(url, q, l, h, true);
 	}
 
 	/**
@@ -872,9 +882,7 @@ public final class Timeline {
 			throw new IllegalArgumentException("Handler must not be null.");
 		}
 		//
-		if (checkAuth) {
-			checkUserAuth();
-		}
+		checkUserAuth();
 		//
 		Runnable r = new Runnable() {
 			public void run() {
@@ -897,7 +905,7 @@ public final class Timeline {
 					//
 					HttpResponseCodeInterpreter.perform(resp);
 					//
-					Parser parser = ParserFactory.getDefaultParser();
+					Parser parser = ParserFactory.getParser(ParserFactory.JSON);
 					parser.parse(resp.getStream(), h);
 					//
 					l.searchCompleted();

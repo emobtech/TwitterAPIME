@@ -18,12 +18,12 @@ import com.twitterapime.io.HttpResponse;
 import com.twitterapime.io.HttpResponseCodeInterpreter;
 import com.twitterapime.model.Cursor;
 import com.twitterapime.model.MetadataSet;
-import com.twitterapime.parser.DefaultXMLHandler;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserException;
 import com.twitterapime.parser.ParserFactory;
-import com.twitterapime.rest.handler.AccountHandler;
 import com.twitterapime.rest.handler.FriendshipHandler;
+import com.twitterapime.rest.handler.json.UserIdJSONHandler;
+import com.twitterapime.rest.handler.json.UserJSONHandler;
 import com.twitterapime.search.InvalidQueryException;
 import com.twitterapime.search.LimitExceededException;
 import com.twitterapime.search.Query;
@@ -46,14 +46,11 @@ import com.twitterapime.util.StringUtil;
  * }
  * 
  * ...
- * 
- * FriendshipManager fdr = FriendshipManager.getInstance();
- * String[] ids = fdr.getFriendsID(new UserAccount("twapime"), null);
  * </pre>
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.3
+ * @version 1.4
  * @since 1.4
  */
 public final class FriendshipManager {
@@ -84,8 +81,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friends id.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/friends/ids" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/friends/ids
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/friends/ids" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/friends/ids
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -101,8 +98,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service followers id.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/followers/ids" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/followers/ids
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/followers/ids" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/followers/ids
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -118,8 +115,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friendships create.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/friendships/create" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/friendships/create
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/friendships/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/friendships/create
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -133,8 +130,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friendships destroy.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/friendships/destroy" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/friendships/destroy
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/friendships/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/friendships/destroy
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -154,6 +151,7 @@ public final class FriendshipManager {
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
 	 * @see FriendshipManager#isFollowing(UserAccount)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_FRIENDSHIPS_EXISTS =
 		"TWITTER_API_URL_SERVICE_FRIENDSHIPS_EXISTS";
@@ -163,8 +161,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friendships incoming.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/friendships/incoming" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/friendships/incoming
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/friendships/incoming" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/friendships/incoming
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -178,8 +176,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friendships outgoing.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/friendships/outgoing" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/friendships/outgoing
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/friendships/outgoing" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/friendships/outgoing
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -193,8 +191,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service blocks create.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/blocks/create" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/blocks/create
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/blocks/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/blocks/create
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -208,8 +206,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service blocks destroy.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/blocks/destroy" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/blocks/destroy
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/blocks/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/blocks/destroy
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -229,6 +227,7 @@ public final class FriendshipManager {
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
 	 * @see FriendshipManager#isBlocking(UserAccount)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_BLOCKS_EXISTS =
 		"TWITTER_API_URL_SERVICE_BLOCKS_EXISTS";
@@ -238,13 +237,12 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service statuses friends.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/friends" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/friends
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/friends/list" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/friends/list
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
 	 * @see FriendshipManager#getFriends(Query)
-	 * @deprecated
 	 */
 	public static final String TWITTER_API_URL_SERVICE_STATUSES_FRIENDS =
 		"TWITTER_API_URL_SERVICE_STATUSES_FRIENDS";
@@ -254,13 +252,12 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service statuses followers.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/statuses/followers" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/statuses/followers
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/followers/list" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/followers/list
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
 	 * @see FriendshipManager#getFollowers(Query)
-	 * @deprecated
 	 */
 	public static final String TWITTER_API_URL_SERVICE_STATUSES_FOLLOWERS =
 		"TWITTER_API_URL_SERVICE_STATUSES_FOLLOWERS";
@@ -270,8 +267,8 @@ public final class FriendshipManager {
 	 * Key for Twitter API URL service friendships show.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/friendships/show" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/friendships/show
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/friendships/show" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/friendships/show
 	 * </a>
 	 * </p>
 	 * @see FriendshipManager#setServiceURL(String, String)
@@ -285,43 +282,43 @@ public final class FriendshipManager {
 		//
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDS_ID,
-			"http://api.twitter.com/1/friends/ids.xml");
+			"https://api.twitter.com/1.1/friends/ids.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FOLLOWERS_ID,
-			"http://api.twitter.com/1/followers/ids.xml");
+			"https://api.twitter.com/1.1/followers/ids.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_CREATE,
-			"http://api.twitter.com/1/friendships/create.xml");
+			"https://api.twitter.com/1.1/friendships/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_DESTROY,
-			"http://api.twitter.com/1/friendships/destroy.xml");
+			"https://api.twitter.com/1.1/friendships/destroy.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_EXISTS,
 			"http://api.twitter.com/1/friendships/exists.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_INCOMING,
-			"http://api.twitter.com/1/friendships/incoming.xml");
+			"https://api.twitter.com/1.1/friendships/incoming.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_OUTGOING,
-			"http://api.twitter.com/1/friendships/outgoing.xml");
+			"https://api.twitter.com/1.1/friendships/outgoing.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_BLOCKS_CREATE,
-			"http://api.twitter.com/1/blocks/create.xml");
+			"https://api.twitter.com/1.1/blocks/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_BLOCKS_DESTROY,
-			"http://api.twitter.com/1/blocks/destroy.xml");
+			"https://api.twitter.com/1.1/blocks/destroy.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_BLOCKS_EXISTS,
 			"http://api.twitter.com/1/blocks/exists/");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_FRIENDS,
-			"http://api.twitter.com/1/statuses/friends.xml");
+			"https://api.twitter.com/1.1/friends/list.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_STATUSES_FOLLOWERS,
-			"http://api.twitter.com/1/statuses/followers.xml");
+			"https://api.twitter.com/1.1/followers/list.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_FRIENDSHIPS_SHOW,
-			"http://api.twitter.com/1/friendships/show.json");
+			"https://api.twitter.com/1.1/friendships/show.json");
 	}
 	
 	/**
@@ -432,6 +429,7 @@ public final class FriendshipManager {
 	 * to any user account.
 	 * </p>
 	 * @return FriendshipManager single instance.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public synchronized static FriendshipManager getInstance() {
 		if (singleInstance == null) {
@@ -485,8 +483,6 @@ public final class FriendshipManager {
 	 */
 	public String[] getFriendsID(Query query) throws IOException,
 		LimitExceededException {
-		checkUserAuth();
-		//
 		return retrieveIDs(
 			getURL(TWITTER_API_URL_SERVICE_FRIENDS_ID),
 			userAccountMngr.getUserAccount(),
@@ -509,7 +505,8 @@ public final class FriendshipManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If user is not informed.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or 
+	 *                           given user is protected.
 	 * @see UserAccountManager#getUserAccount(UserAccount)
 	 * @deprecated Use {@link FriendshipManager#getFriendsIDs(Query)}.
 	 */
@@ -539,8 +536,6 @@ public final class FriendshipManager {
 	 */
 	public String[] getFollowersID(Query query) throws IOException,
 		LimitExceededException {
-		checkUserAuth();
-		//
 		return retrieveIDs(
 			getURL(TWITTER_API_URL_SERVICE_FOLLOWERS_ID),
 			userAccountMngr.getUserAccount(),
@@ -563,7 +558,8 @@ public final class FriendshipManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If user is not informed.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or 
+	 *                           given user is protected.
 	 * @see UserAccountManager#getUserAccount(UserAccount)
 	 * @deprecated Use {@link FriendshipManager#getFollowersIDs(Query)}.
 	 */
@@ -614,7 +610,8 @@ public final class FriendshipManager {
 	 * @return Friends.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
 	 * @see MetadataSet#USERACCOUNT_FRIENDS_COUNT
 	 */
 	public Cursor getFriendsIDs(Query query) throws IOException,
@@ -664,7 +661,8 @@ public final class FriendshipManager {
 	 * @return Friends.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
 	 * @see MetadataSet#USERACCOUNT_FOLLOWERS_COUNT
 	 */
 	public Cursor getFollowersIDs(Query query) throws IOException,
@@ -715,9 +713,10 @@ public final class FriendshipManager {
 	 * @return Friends.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
-	 * @deprecated Use {@link FriendshipManager#getFriendsIDs(Query)} and 
-	 *                 {@link UserAccountManager#lookup(Query)}..
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
+	 * @see FriendshipManager#getFriendsIDs(Query)
+	 * @see UserAccountManager#lookup(Query)
 	 */
 	public Cursor getFriends(Query query) throws IOException,
 		LimitExceededException {
@@ -767,9 +766,10 @@ public final class FriendshipManager {
 	 * @return Followers.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
-	 * @deprecated Use {@link FriendshipManager#getFollowersIDs(Query)} and 
-	 *                 {@link UserAccountManager#lookup(Query)}..
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
+	 * @see FriendshipManager#getFollowersIDs(Query) 
+	 * @see UserAccountManager#lookup(Query)
 	 */
 	public Cursor getFollowers(Query query) throws IOException,
 		LimitExceededException {
@@ -826,31 +826,9 @@ public final class FriendshipManager {
 	 */
 	public boolean isFollowing(UserAccount ua) throws IOException,
 		LimitExceededException {
-		if (ua == null) {
-			throw new IllegalArgumentException(
-				"UserAccount object must not me null.");
-		}
-		ua.validateUserNameOrID();
+		Friendship friendship = getFriendship(ua).getSource();
 		//
-		checkUserAuth();
-		//
-		Credential c = userAccountMngr.getCredential();
-		final String qryStr =
-			"?user_a=" + c.getString(MetadataSet.CREDENTIAL_USERNAME) +
-			"&user_b=" + ua.getUserNameOrID();
-		//
-		HttpRequest req = userAccountMngr.createRequest(
-			getURL(TWITTER_API_URL_SERVICE_FRIENDSHIPS_EXISTS) + qryStr);
-		//
-		try {
-			HttpResponse resp = req.send();
-			//
-			HttpResponseCodeInterpreter.perform(resp);
-			//
-			return resp.getBodyContent().toLowerCase().equals("true");
-		} finally {
-			req.close();
-		}
+		return friendship.getBoolean(MetadataSet.FRIENDSHIP_FOLLOWING);
 	}
 	
 	/**
@@ -901,31 +879,9 @@ public final class FriendshipManager {
 	 */
 	public boolean isBlocking(UserAccount ua) throws IOException,
 		LimitExceededException {
-		if (ua == null) {
-			throw new IllegalArgumentException(
-				"UserAccount object must not me null.");
-		}
-		ua.validateUserNameOrID();
+		Friendship friendship = getFriendship(ua).getSource();
 		//
-		checkUserAuth();
-		//
-		HttpRequest req = userAccountMngr.createRequest(
-			getURL(TWITTER_API_URL_SERVICE_BLOCKS_EXISTS) +
-			ua.getUserNameOrID() +
-			".xml");
-		//
-		try {
-			HttpResponse resp = req.send();
-			if (resp.getCode() == HttpConnection.HTTP_NOT_FOUND) {
-				return false; //not blocked!
-			}
-			//
-			HttpResponseCodeInterpreter.perform(resp);
-			//
-			return true;
-		} finally {
-			req.close();
-		}
+		return friendship.getBoolean(MetadataSet.FRIENDSHIP_BLOCKING);
 	}
 	
 	/**
@@ -948,8 +904,6 @@ public final class FriendshipManager {
 	 */
 	public String[] getIncomingFollowersID(Query query) throws IOException,
 		LimitExceededException {
-		checkUserAuth();
-		//
 		return retrieveIDs(
 			getURL(TWITTER_API_URL_SERVICE_FRIENDSHIPS_INCOMING),
 			userAccountMngr.getUserAccount(),
@@ -976,8 +930,6 @@ public final class FriendshipManager {
 	 */
 	public String[] getOutgoingFriendsID(Query query) throws IOException,
 		LimitExceededException {
-		checkUserAuth();
-		//
 		return retrieveIDs(
 			getURL(TWITTER_API_URL_SERVICE_FRIENDSHIPS_OUTGOING),
 			userAccountMngr.getUserAccount(),
@@ -1017,10 +969,13 @@ public final class FriendshipManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException if source, target, source's id/username
-	 * 									or target's id/username is empty. 
+	 * 									or target's id/username is empty.
+	 * @throws SecurityException If user account manager is not informed. 
 	 */
 	public Friendship getFriendship(UserAccount source, UserAccount target)
 		throws IOException,	LimitExceededException {
+		checkUserAuth();
+		//
 		if (source == null) {
 			throw new IllegalArgumentException("Source must not me null.");
 		}
@@ -1048,13 +1003,7 @@ public final class FriendshipManager {
 		String url = getURL(TWITTER_API_URL_SERVICE_FRIENDSHIPS_SHOW);
 		url += "?" + pvSrc[0] + "=" + pvSrc[1] + "&" + pvTgt[0] + "=" +pvTgt[1];
 		//
-		HttpRequest req;
-		//
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		try {
 			HttpResponse resp = req.send();
@@ -1156,8 +1105,8 @@ public final class FriendshipManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			return handler.getParsedUserAccounts()[0];
@@ -1177,11 +1126,14 @@ public final class FriendshipManager {
 	 * @return Friends/Followers.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
 	 * @throws IllegalArgumentException If url is null/empty.
 	 */
 	private Cursor getFriendsOrFollowers(String url, Query query)
 		throws IOException,	LimitExceededException {
+		checkUserAuth();
+		//
 		if (StringUtil.isEmpty(url)) {
 			throw new IllegalArgumentException("Url must not be null/empty.");
 		}
@@ -1190,21 +1142,15 @@ public final class FriendshipManager {
 			url += "?" + query.toString();
 		}
 		//
-		HttpRequest req;
-		//
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		try {
 			HttpResponse resp = req.send();
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			Cursor cursor =
@@ -1230,11 +1176,14 @@ public final class FriendshipManager {
 	 * @return Friends/Followers.
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
 	 * @throws IllegalArgumentException If url is null/empty.
 	 */
 	private Cursor getFriendsIDsOrFollowersIDs(String url, Query query)
 		throws IOException,	LimitExceededException {
+		checkUserAuth();
+		//
 		if (StringUtil.isEmpty(url)) {
 			throw new IllegalArgumentException("Url must not be null/empty.");
 		}
@@ -1243,33 +1192,22 @@ public final class FriendshipManager {
 			url += "?" + query.toString();
 		}
 		//
-		HttpRequest req;
-		//
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		try {
 			HttpResponse resp = req.send();
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			IDsHandler handler = new IDsHandler(Long.MAX_VALUE);
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserIdJSONHandler handler = new UserIdJSONHandler();
 			parser.parse(resp.getStream(), handler);
-			//
-			Vector idsVec = handler.getIDsList();
-			String[] ids = new String[idsVec.size()];
-			//
-			idsVec.copyInto(ids);
 			//
 			Cursor cursor =
 				new Cursor(
-					ids,
-					handler.getCursorPreviousIndex(),
-					handler.getCursorNextIndex());
+					handler.getParsedIds(),
+					handler.getPreviousCursorIndex(),
+					handler.getNextCursorIndex());
 			//
 			return cursor;
 		} catch (ParserException e) {
@@ -1290,10 +1228,13 @@ public final class FriendshipManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If user is not informed.
-	 * @throws SecurityException Given user is protected.
+	 * @throws SecurityException If user account manager is not informed or
+	 *                           given user is protected.
 	 */
 	private String[] retrieveIDs(String url, UserAccount user, Query query)
 		throws IOException, LimitExceededException {
+		checkUserAuth();
+		//
 		if (user == null) {
 			throw new IllegalArgumentException("User must not be null.");
 		}
@@ -1311,17 +1252,12 @@ public final class FriendshipManager {
 		long loadedCount = 0;
 		long cursorNextIdx = -1;
 		Vector idsList = new Vector(20);
-		IDsHandler handler = new IDsHandler(maxCount);
-		Parser parser = ParserFactory.getDefaultParser();
+		UserIdJSONHandler handler = new UserIdJSONHandler(maxCount);
+		Parser parser = ParserFactory.getParser(ParserFactory.JSON);
 		//
 		do {
-			HttpRequest req;
-			if (userAccountMngr != null) {
-				req = userAccountMngr.createRequest(
-					url + "&cursor=" + cursorNextIdx);
-			} else {
-				req = new HttpRequest(url + "&cursor=" + cursorNextIdx);
-			}
+			HttpRequest req =
+				userAccountMngr.createRequest(url + "&cursor=" + cursorNextIdx);
 			//
 			try {
 				HttpResponse resp = req.send();
@@ -1330,8 +1266,13 @@ public final class FriendshipManager {
 				//
 				parser.parse(resp.getStream(), handler);
 				//
-				loadedCount += copyVector(idsList, handler.getIDsList());
-				cursorNextIdx = handler.getCursorNextIndex();
+				String[] ids = handler.getParsedIds();
+				for (int i = 0; i < ids.length; i++) {
+					idsList.add(ids[i]);
+					loadedCount++;
+				}
+				//
+				cursorNextIdx = handler.getNextCursorIndex();
 				//
 				handler.clear();
 			} catch (ParserException e) {
@@ -1349,23 +1290,6 @@ public final class FriendshipManager {
 	
 	/**
 	 * <p>
-	 * Copy all elements from a vector to another one. 
-	 * </p>
-	 * @param to Vector to.
-	 * @param from Vector from.
-	 * @return Count of items copied.
-	 */
-	private int copyVector(Vector to, Vector from) {
-		int size = from.size();
-		for (int i = 0; i < size; i++) {
-			to.addElement(from.elementAt(i));
-		}
-		//
-		return size;
-	}
-	
-	/**
-	 * <p>
 	 * Check if the user's is authenticated.
 	 * </p>
 	 * @throws SecurityException User is not authenticated.
@@ -1374,121 +1298,6 @@ public final class FriendshipManager {
 		if (userAccountMngr == null || !userAccountMngr.isVerified()) {
 			throw new SecurityException(
 			    "User's credential must be entered to perform this operation.");
-		}
-	}
-	
-	/**
-	 * <p>
-	 * XML handlers for parsing a list of IDs.
-	 * </p>
-	 * 
-	 * @author Ernandes Mourao Junior (ernandes@gmail.com)
-	 * @version 1.0
-	 * @since 1.4
-	 */
-	private static class IDsHandler extends DefaultXMLHandler {
-		/**
-		 * <p>
-		 * Max count of IDs.
-		 * </p>
-		 */
-		private final long maxCount;
-		
-		/**
-		 * <p>
-		 * Count of IDs read.
-		 * </p>
-		 */
-		private long count;
-
-		/**
-		 * <p>
-		 * Cursor previous index.
-		 * </p>
-		 */
-		private long cursorPrevIdx;
-
-		/**
-		 * <p>
-		 * Cursor next index.
-		 * </p>
-		 */
-		private long cursorNextIdx;
-
-		/**
-		 * <p>
-		 * IDs list.
-		 * </p>
-		 */
-		private Vector idsList = new Vector(20);
-		
-		/**
-		 * <p>
-		 * Create an instance of IDsHandler class.
-		 * </p>
-		 * @param maxCount Max count of IDs.
-		 */
-		public IDsHandler(long maxCount) {
-			this.maxCount = maxCount;
-		}
-		
-		/**
-		 * @see com.twitterapime.parser.DefaultXMLHandler#text(java.lang.String)
-		 */
-		public void text(String text) throws ParserException {
-			text = text.trim();
-			//
-			if (xmlPath.equals("/id_list/ids/id")) {
-				if (count < maxCount) {
-					idsList.addElement(text);
-					count++;
-				}
-			} else if (xmlPath.equals("/id_list/next_cursor")) {
-				cursorNextIdx = Long.parseLong(text);
-			} else if (xmlPath.equals("/id_list/previous_cursor")) {
-				cursorPrevIdx = Long.parseLong(text);
-			}
-		}
-		
-		/**
-		 * <p>
-		 * Get IDs list.
-		 * </p>
-		 * @return List.
-		 */
-		public Vector getIDsList() {
-			return idsList;
-		}
-		
-		/**
-		 * <p>
-		 * Cursor previous index.
-		 * </p>
-		 * @return Index.
-		 */
-		public long getCursorPreviousIndex() {
-			return cursorPrevIdx;
-		}
-		
-		/**
-		 * <p>
-		 * Cursor next index.
-		 * </p>
-		 * @return Index.
-		 */
-		public long getCursorNextIndex() {
-			return cursorNextIdx;
-		}
-		
-		/**
-		 * <p>
-		 * Clear internal state of handler.
-		 * </p>
-		 */
-		public void clear() {
-			idsList.removeAllElements();
-			cursorNextIdx = 0;
-			cursorPrevIdx = 0;
 		}
 	}
 }

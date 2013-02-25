@@ -19,8 +19,8 @@ import com.twitterapime.model.MetadataSet;
 import com.twitterapime.parser.Parser;
 import com.twitterapime.parser.ParserException;
 import com.twitterapime.parser.ParserFactory;
-import com.twitterapime.rest.handler.AccountHandler;
-import com.twitterapime.rest.handler.ListHandler;
+import com.twitterapime.rest.handler.json.ListJSONHandler;
+import com.twitterapime.rest.handler.json.UserJSONHandler;
 import com.twitterapime.search.LimitExceededException;
 import com.twitterapime.search.Query;
 import com.twitterapime.search.SearchDeviceListener;
@@ -40,14 +40,11 @@ import com.twitterapime.search.SearchDeviceListener;
  *   List[] lists = listMngr.getLists();
  * }
  * ...
- * ListManager listMngr = ListManager.getInstance();
- * List[] lists = listMngr.getLists(new UserAccount("username"));
- * ...
  * </pre>
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.1
+ * @version 1.2
  * @since 1.6
  */
 public final class ListManager {
@@ -180,8 +177,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists members destroy.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/members/destroy" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/members/destroy
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/members/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/members/destroy
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -195,8 +192,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists members.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/lists/members" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/lists/members
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/lists/members" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/lists/members
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -210,8 +207,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists members create.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/members/create" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/members/create
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/members/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/members/create
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -225,8 +222,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists subscribers destroy.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/subscribers/destroy
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/destroy
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -240,8 +237,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists subscribers create.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/subscribers/create" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/subscribers/create
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/create
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -255,8 +252,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists subscribers.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/lists/subscriptions" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/lists/subscriptions
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/lists/subscribers" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/lists/subscribers
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -270,8 +267,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists destroy.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/destroy" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/destroy
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/destroy" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/destroy
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -285,8 +282,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists update.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/update" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/update
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/update" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/update
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -300,8 +297,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists all.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/lists/all" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/lists/all
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/lists/list" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/lists/list
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -316,8 +313,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists create.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/post/lists/create" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/post/lists/create
+	 * <a href="https://dev.twitter.com/docs/api/1.1/post/lists/create" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/post/lists/create
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -331,8 +328,8 @@ public final class ListManager {
 	 * Key for Twitter API URL service lists memberships.
 	 * </p>
 	 * <p>
-	 * <a href="http://dev.twitter.com/docs/api/1/get/lists/memberships" target="_blank">
-	 *   http://dev.twitter.com/docs/api/1/get/lists/memberships
+	 * <a href="https://dev.twitter.com/docs/api/1.1/get/lists/memberships" target="_blank">
+	 *   https://dev.twitter.com/docs/api/1.1/get/lists/memberships
 	 * </a>
 	 * </p>
 	 * @see ListManager#setServiceURL(String, String)
@@ -363,40 +360,40 @@ public final class ListManager {
 		//
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_MEMBERS_DESTROY,
-			"http://api.twitter.com/1/lists/members/destroy.xml");
+			"https://api.twitter.com/1.1/lists/members/destroy.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_MEMBERS,
-			"http://api.twitter.com/1/lists/members.xml");
+			"https://api.twitter.com/1.1/lists/members.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_MEMBERS_CREATE,
-			"http://api.twitter.com/1/lists/members/create.xml");
+			"https://api.twitter.com/1.1/lists/members/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_SUBSCRIBERS_DESTROY,
-			"http://api.twitter.com/1/lists/subscribers/destroy.xml");
+			"https://api.twitter.com/1.1/lists/subscribers/destroy.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_SUBSCRIBERS_CREATE,
-			"http://api.twitter.com/1/lists/subscribers/create.xml");
+			"https://api.twitter.com/1.1/lists/subscribers/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_SUBSCRIBERS,
-			"http://api.twitter.com/1/lists/subscribers.xml");
+			"https://api.twitter.com/1.1/lists/subscribers.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_DESTROY,
-			"http://api.twitter.com/1/lists/destroy.xml");
+			"https://api.twitter.com/1.1/lists/destroy.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_UPDATE,
-			"http://api.twitter.com/1/lists/update.xml");
+			"https://api.twitter.com/1.1/lists/update.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_ALL,
-			"http://api.twitter.com/1/lists/all.xml");
+			"http://api.twitter.com/1.1/lists/list.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_CREATE,
-			"http://api.twitter.com/1/lists/create.xml");
+			"https://api.twitter.com/1.1/lists/create.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS_MEMBERSHIPS,
-			"http://api.twitter.com/1/lists/memberships.xml");
+			"https://api.twitter.com/1.1/lists/memberships.json");
 		SERVICES_URL.put(
 			TWITTER_API_URL_SERVICE_LISTS,
-			"http://api.twitter.com/1/lists.xml");
+			"https://api.twitter.com/1.1/lists/list.json");
 	}
 	
 	/**
@@ -468,6 +465,7 @@ public final class ListManager {
 	 * to any user account.
 	 * </p>
 	 * @return ListManager single instance.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public synchronized static ListManager getInstance() {
 		if (singleInstance == null) {
@@ -647,8 +645,6 @@ public final class ListManager {
 	 * @throws SecurityException If it is not authenticated.
 	 */
 	public List[] getMemberships() throws IOException, LimitExceededException {
-		checkUserAuth();
-		//
 		return getMemberships(getUserAccountFromCredential());
 	}
 	
@@ -661,9 +657,12 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @throws IllegalArgumentException If user is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	public List[] getMemberships(UserAccount user) throws IOException,
 		LimitExceededException {
+		checkUserAuth();
+		//
 		if (user == null) {
 			throw new IllegalArgumentException("User must not be null.");
 		}
@@ -679,12 +678,7 @@ public final class ListManager {
 		//
 		url += "?" + usrp[0] + "=" + usrp[1];
 		//
-		HttpRequest req;
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		return processRequest(req);
 	}
@@ -700,8 +694,6 @@ public final class ListManager {
 	 */
 	public List[] getSubscriptions() throws IOException,
 		LimitExceededException {
-		checkUserAuth();
-		//
 		return getSubscriptions(getUserAccountFromCredential());
 	}
 	
@@ -714,9 +706,12 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @throws IllegalArgumentException If user is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	public List[] getSubscriptions(UserAccount user) throws IOException,
 		LimitExceededException {
+		checkUserAuth();
+		//
 		if (user == null) {
 			throw new IllegalArgumentException("User must not be null.");
 		}
@@ -732,12 +727,7 @@ public final class ListManager {
 		//
 		url += "?" + usrp[0] + "=" + usrp[1];
 		//
-		HttpRequest req;
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		return processRequest(req);
 	}
@@ -902,6 +892,7 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @throws IllegalArgumentException If list is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	public UserAccount[] getMembers(List list) throws IOException,
 		LimitExceededException {
@@ -919,6 +910,7 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @throws IllegalArgumentException If list is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	public UserAccount[] getSubscribers(List list) throws IOException,
 		LimitExceededException {
@@ -936,8 +928,6 @@ public final class ListManager {
 	 * @throws SecurityException If it is not authenticated.
 	 */
 	public List[] getLists() throws IOException, LimitExceededException {
-		checkUserAuth();
-		//
 		return getLists(getUserAccountFromCredential());
 	}
 
@@ -951,9 +941,12 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @throws IllegalArgumentException If user is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	public List[] getLists(UserAccount user) throws IOException,
 		LimitExceededException {
+		checkUserAuth();
+		//
 		if (user == null) {
 			throw new IllegalArgumentException("User must not be null.");
 		}
@@ -969,12 +962,7 @@ public final class ListManager {
 		//
 		url += "?" + usrp[0] + "=" + usrp[1];
 		//
-		HttpRequest req;
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		return processRequest(req);
 	}
@@ -983,13 +971,9 @@ public final class ListManager {
 	 * {@link Timeline#startGetListTweets(List, Query, SearchDeviceListener)}
 	 */
 	public void startGetListTweets(List list, Query q, SearchDeviceListener l) {
-		Timeline tml;
+		checkUserAuth();
 		//
-		if (userAccountMngr != null) {
-			tml = Timeline.getInstance(userAccountMngr);
-		} else {
-			tml = Timeline.getInstance();
-		}
+		Timeline tml = Timeline.getInstance(userAccountMngr);
 		//
 		tml.startGetListTweets(list, q, l);
 	}
@@ -1022,8 +1006,8 @@ public final class ListManager {
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			ListHandler handler = new ListHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			ListJSONHandler handler = new ListJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			return handler.getParsedLists();
@@ -1044,9 +1028,12 @@ public final class ListManager {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If list is null.
+	 * @throws SecurityException If it is not authenticated.
 	 */
 	private UserAccount[] processMembersSubscribersRequest(List list,
 		String urlKey) throws IOException, LimitExceededException {
+		checkUserAuth();
+		//
 		if (list == null) {
 			throw new IllegalArgumentException("List must not be null.");
 		}
@@ -1057,20 +1044,15 @@ public final class ListManager {
 			getURL(urlKey) + 
 			"?skip_status=true&list_id=" + list.getString(MetadataSet.LIST_ID);
 		//
-		HttpRequest req;
-		if (userAccountMngr != null) {
-			req = userAccountMngr.createRequest(url);
-		} else {
-			req = new HttpRequest(url);
-		}
+		HttpRequest req = userAccountMngr.createRequest(url);
 		//
 		try {
 			HttpResponse resp = req.send();
 			//
 			HttpResponseCodeInterpreter.perform(resp);
 			//
-			Parser parser = ParserFactory.getDefaultParser();
-			AccountHandler handler = new AccountHandler();
+			Parser parser = ParserFactory.getParser(ParserFactory.JSON);
+			UserJSONHandler handler = new UserJSONHandler();
 			parser.parse(resp.getStream(), handler);
 			//
 			return handler.getParsedUserAccounts();

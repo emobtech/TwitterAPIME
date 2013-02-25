@@ -71,6 +71,7 @@ public final class SearchDevice {
 	 * <p>
 	 * Time at which Twitter Search API was access by this class.
 	 * </p>
+	 * @deprecated
 	 */
 	private static long lastCallTime;
 	
@@ -78,6 +79,7 @@ public final class SearchDevice {
 	 * <p>
 	 * Number of calls to Twitter Search API since this class was loaded.
 	 * </p>
+	 * @deprecated
 	 */
 	private static int apiCallsCount;
 	
@@ -110,6 +112,7 @@ public final class SearchDevice {
 	 * </p>
 	 * @see SearchDevice#setServiceURL(String, String)
 	 * @see SearchDevice#getRateLimitStatus()
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_ACCOUNT_RATE_LIMIT_STATUS =
 		"TWITTER_API_URL_SERVICE_ACCOUNT_RATE_LIMIT_STATUS";
@@ -287,6 +290,7 @@ public final class SearchDevice {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If limit has been hit.
 	 * @see SearchDevice#getAPICallsCount()
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public RateLimitStatus getRateLimitStatus() throws IOException,
 		LimitExceededException {
@@ -318,6 +322,7 @@ public final class SearchDevice {
 	 * </p>
 	 * @return Call count.
 	 * @see SearchDevice#getRateLimitStatus()
+	 * @deprecated
 	 */
 	public int getAPICallsCount() {
 		return apiCallsCount;
@@ -328,6 +333,7 @@ public final class SearchDevice {
 	 * Get the time at which the last call was submitted to Twitter Search API.
 	 * </p>
 	 * @return Time of last call.
+	 * @deprecated
 	 */
 	public long getLastAPICallTime() {
 		return lastCallTime;

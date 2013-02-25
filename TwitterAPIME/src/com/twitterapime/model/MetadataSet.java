@@ -16,7 +16,7 @@ package com.twitterapime.model;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.7
+ * @version 1.8
  * @since 1.0
  */
 public final class MetadataSet {
@@ -660,6 +660,13 @@ public final class MetadataSet {
 	 * </p>
 	 */
 	public static final String LIST_FULL_NAME = "LIST_FULL_NAME";
+	
+	/**
+	 * <p>
+	 * Report the list's create date (long format), e.g., "16549813254".
+	 * </p>
+	 */
+	public static final String LIST_CREATE_DATE = "LIST_CREATE_DATE";
 	
 	/**
 	 * <p>

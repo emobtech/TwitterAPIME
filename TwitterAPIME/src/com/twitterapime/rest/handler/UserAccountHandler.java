@@ -10,7 +10,7 @@ package com.twitterapime.rest.handler;
 import java.util.Hashtable;
 
 import com.twitterapime.model.MetadataSet;
-import com.twitterapime.parser.DefaultXMLHandler;
+import com.twitterapime.parser.JSONObject;
 import com.twitterapime.util.StringUtil;
 
 /**
@@ -19,10 +19,10 @@ import com.twitterapime.util.StringUtil;
  * </p>
  * 
  * @author Ernandes Mourao Junior (ernandes@gmail.com)
- * @version 1.3
+ * @version 1.4
  * @since 1.1
  */
-public final class UserAccountHandler extends DefaultXMLHandler {
+public final class UserAccountHandler {
 	/**
 	 * <p>
 	 * Populate the given hash according to the tags and their values
@@ -90,6 +90,67 @@ public final class UserAccountHandler extends DefaultXMLHandler {
 			data.put(MetadataSet.USERACCOUNT_VERIFIED, text);
 		} else if (path.endsWith("/geo_enabled")) {
 			data.put(MetadataSet.USERACCOUNT_GEO_ENABLED, text);
+		}
+	}
+	
+	/**
+	 * <p>
+	 * Populate the given hash according to the keys and their values
+	 * </p>
+	 * @param data Hash to be populated.
+	 * @param jsonObj JSON object that contains user's data.
+	 */
+	public void populate(Hashtable data, JSONObject jsonObj) {
+		putIf(data, MetadataSet.USERACCOUNT_ID, jsonObj, "id");
+		putIf(data, MetadataSet.USERACCOUNT_NAME, jsonObj, "name");
+		putIf(data, MetadataSet.USERACCOUNT_USER_NAME, jsonObj, "screen_name");
+		putIf(data, MetadataSet.USERACCOUNT_LOCATION, jsonObj, "location");
+		putIf(data, MetadataSet.USERACCOUNT_DESCRIPTION, jsonObj, "description");
+		putIf(data, MetadataSet.USERACCOUNT_PICTURE_URI, jsonObj, "profile_image_url");
+		putIf(data, MetadataSet.USERACCOUNT_URL, jsonObj, "url");
+		putIf(data, MetadataSet.USERACCOUNT_UTC_OFFSET, jsonObj, "utc_offset");
+		putIf(data, MetadataSet.USERACCOUNT_TIME_ZONE, jsonObj, "time_zone");
+		putIf(data, MetadataSet.USERACCOUNT_PROTECTED, jsonObj, "protected");
+		putIf(data, MetadataSet.USERACCOUNT_NOTIFICATIONS, jsonObj, "notifications");
+		putIf(data, MetadataSet.USERACCOUNT_VERIFIED, jsonObj, "verified");
+		putIf(data, MetadataSet.USERACCOUNT_GEO_ENABLED, jsonObj, "geo_enabled");
+		putIf(data, MetadataSet.USERACCOUNT_TWEETS_COUNT, jsonObj, "statuses_count");
+		putIf(data, MetadataSet.USERACCOUNT_FAVOURITES_COUNT, jsonObj, "favourites_count");
+		putIf(data, MetadataSet.USERACCOUNT_FOLLOWERS_COUNT, jsonObj, "followers_count");
+		putIf(data, MetadataSet.USERACCOUNT_FRIENDS_COUNT, jsonObj, "friends_count");
+		putIf(data, MetadataSet.USERACCOUNT_PROFILE_BACKGROUND_COLOR, jsonObj, "profile_background_color");
+		putIf(data, MetadataSet.USERACCOUNT_PROFILE_TEXT_COLOR, jsonObj, "profile_text_color");
+		putIf(data, MetadataSet.USERACCOUNT_PROFILE_LINK_COLOR, jsonObj, "profile_link_color");
+		putIf(data, MetadataSet.USERACCOUNT_PROFILE_BACKGROUND_IMAGE_URI, jsonObj, "profile_background_image_url");
+		//
+		if (jsonObj.has("created_at")) {
+			data.put(MetadataSet.USERACCOUNT_CREATE_DATE, String.valueOf(StringUtil.convertTweetDateToLong(jsonObj.getString("created_at"))));
+		}
+		if (jsonObj.has("screen_name")) {
+			final String picUri =
+				"http://api.twitter.com/1/users/profile_image/" + 
+				jsonObj.getString("screen_name") + 
+				".json?size=";
+			//
+			data.put(MetadataSet.USERACCOUNT_PICTURE_URI_MINI, picUri + "mini");
+			data.put(MetadataSet.USERACCOUNT_PICTURE_URI_NORMAL, picUri + "normal");
+			data.put(MetadataSet.USERACCOUNT_PICTURE_URI_BIGGER, picUri + "bigger");
+		}
+	}
+	
+	/**
+	 * <p>
+	 * Put the given key's value in hash table if present in json object.
+	 * </p>
+	 * @param data Table.
+	 * @param dataKey Table's key.
+	 * @param jsonObj JSON object.
+	 * @param jsonKey JSON's key.
+	 */
+	private void putIf(Hashtable data, String dataKey, JSONObject jsonObj,
+		String jsonKey) {
+		if (jsonObj.has(jsonKey)) {
+			data.put(dataKey, jsonObj.getString(jsonKey));
 		}
 	}
 }
