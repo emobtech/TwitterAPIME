@@ -112,7 +112,7 @@ public final class ListJSONHandler extends DefaultJSONHandler {
 			}
 		}
 		//
-		lists.add(new List(listValues));
+		lists.addElement(new List(listValues));
 	}
 	
 	/**

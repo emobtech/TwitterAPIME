@@ -138,8 +138,8 @@ public final class StatusJSONHandler extends DefaultJSONHandler {
 		//
 		fireStatusParsed(status);
 		//
-		statusHashList.add(statusValues);
-		statusList.add(status);
+		statusHashList.addElement(statusValues);
+		statusList.addElement(status);
 	}
 	
 	/**

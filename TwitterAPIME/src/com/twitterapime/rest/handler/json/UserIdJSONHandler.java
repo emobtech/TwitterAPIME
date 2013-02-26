@@ -103,7 +103,7 @@ public final class UserIdJSONHandler extends DefaultJSONHandler {
 				break;
 			}
 			//
-			idsList.add(jsonObj.get(i).toString());
+			idsList.addElement(jsonObj.get(i).toString());
 		}
 	}
 	

@@ -1268,7 +1268,7 @@ public final class FriendshipManager {
 				//
 				String[] ids = handler.getParsedIds();
 				for (int i = 0; i < ids.length; i++) {
-					idsList.add(ids[i]);
+					idsList.addElement(ids[i]);
 					loadedCount++;
 				}
 				//

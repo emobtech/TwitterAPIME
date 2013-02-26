@@ -87,7 +87,7 @@ public final class GeoLocationHandler {
 			Vector vector = new Vector();
 			//
 			for (int i = 0; i < lines.length(); i++) {
-				vector.add(lines.getString(i));
+				vector.addElement(lines.getString(i));
 			}
 			//
 			String[] array = new String[vector.size()];

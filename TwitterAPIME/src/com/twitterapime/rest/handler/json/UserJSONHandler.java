@@ -129,8 +129,8 @@ public final class UserJSONHandler extends DefaultJSONHandler {
 			}
 		}
 		//
-		userHashList.add(accountValues);
-		userList.add(new UserAccount(accountValues));
+		userHashList.addElement(accountValues);
+		userList.addElement(new UserAccount(accountValues));
 	}
 	
 	/**
