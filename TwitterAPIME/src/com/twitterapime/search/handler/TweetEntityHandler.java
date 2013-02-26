@@ -135,7 +135,7 @@ public final class TweetEntityHandler {
 				putIf(t, MetadataSet.TWEETENTITY_USERACCOUNT_NAME, obj, "name");
 				//
 				if (t.size() > 0) {
-					mentions.add(new TweetEntity(t));
+					mentions.addElement(new TweetEntity(t));
 				}
 			}
 			//
@@ -156,7 +156,7 @@ public final class TweetEntityHandler {
 				putIf(t, MetadataSet.TWEETENTITY_DISPLAY_URL, obj, "display_url");
 				//
 				if (t.size() > 0) {
-					medias.add(new TweetEntity(t));
+					medias.addElement(new TweetEntity(t));
 				}
 			}
 			//
@@ -178,7 +178,7 @@ public final class TweetEntityHandler {
 				putIf(t, MetadataSet.TWEETENTITY_EXPANDED_URL, obj, "expanded_url");
 				//
 				if (t.size() > 0) {
-					urls.add(new TweetEntity(t));
+					urls.addElement(new TweetEntity(t));
 				}
 			}
 			//
@@ -198,7 +198,7 @@ public final class TweetEntityHandler {
 				putIf(t, MetadataSet.TWEETENTITY_HASHTAG, obj, "text");
 				//
 				if (t.size() > 0) {
-					hashtags.add(new TweetEntity(t));
+					hashtags.addElement(new TweetEntity(t));
 				}
 			}
 			//
