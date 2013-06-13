@@ -12,6 +12,7 @@ import net.rim.device.api.browser.field2.BrowserFieldListener;
 
 import org.w3c.dom.Document;
 
+import com.twitterapime.util.StringUtil;
 import com.twitterapime.xauth.ui.OAuthDialogListener;
 import com.twitterapime.xauth.ui.OAuthDialogWrapper;
 
@@ -101,7 +102,13 @@ public final class BrowserFieldOAuthDialogWrapper extends OAuthDialogWrapper {
 		 */
 		public void documentLoaded(BrowserField browserField, Document document)
 			throws Exception {
-			trackUrl(browserField.getDocumentUrl());
+			String url = browserField.getDocumentUrl();
+			//
+			if (url.indexOf(";deviceside=true") != -1) {
+				url = StringUtil.replace(url, ";deviceside=true", "");
+			}
+			//
+			trackUrl(url);
 		}
 	}
 }
