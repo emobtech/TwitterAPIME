@@ -24,6 +24,7 @@ import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.system.Display;
 
+import com.twitterapime.util.StringUtil;
 import com.twitterapime.xauth.ui.OAuthDialogListener;
 import com.twitterapime.xauth.ui.OAuthDialogWrapper;
 
@@ -204,7 +205,14 @@ public final class BrowserContentManagerOAuthDialogWrapper
 	        	RedirectEvent redEvent = (RedirectEvent)event;
 	        	//
 	        	loadUrl(redEvent.getLocation(), null, event);
-	        	trackUrl(redEvent.getLocation());
+	        	//
+	        	String url = redEvent.getLocation();
+	        	//
+				if (url.indexOf(";deviceside=true") != -1) {
+					url = StringUtil.replace(url, ";deviceside=true", "");
+				}
+	        	//
+	        	trackUrl(url);
 	        }
 	        //
 			return null;
