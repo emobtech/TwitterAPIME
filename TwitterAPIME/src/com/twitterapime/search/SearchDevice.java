@@ -71,7 +71,6 @@ public final class SearchDevice {
 	 * <p>
 	 * Time at which Twitter Search API was access by this class.
 	 * </p>
-	 * @deprecated
 	 */
 	private static long lastCallTime;
 	
@@ -79,7 +78,6 @@ public final class SearchDevice {
 	 * <p>
 	 * Number of calls to Twitter Search API since this class was loaded.
 	 * </p>
-	 * @deprecated
 	 */
 	private static int apiCallsCount;
 	
@@ -97,6 +95,7 @@ public final class SearchDevice {
 	 * @see SearchDevice#searchTweets(String)
 	 * @see SearchDevice#startSearchTweets(Query, SearchDeviceListener)
 	 * @see SearchDevice#startSearchTweets(String, SearchDeviceListener)
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public static final String TWITTER_API_URL_SERVICE_SEARCH =
 		"TWITTER_API_URL_SERVICE_SEARCH";
@@ -163,6 +162,7 @@ public final class SearchDevice {
 	 * Get an instance of SearchDevice class.
 	 * </p>
 	 * @return A SearchDevice object.
+	 * @deprecated Twitter API v1.1 now requires authentication for all methods.
 	 */
 	public synchronized static SearchDevice getInstance() {
 		if (device == null) {
@@ -190,6 +190,7 @@ public final class SearchDevice {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If query is null.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Tweet[] searchTweets(Query query) throws IOException,
 		LimitExceededException {
@@ -210,6 +211,7 @@ public final class SearchDevice {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws LimitExceededException If the limit of access is exceeded.
 	 * @throws IllegalArgumentException If queryString is null/empty.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public Tweet[] searchTweets(String queryString) throws IOException,
 		LimitExceededException {
@@ -231,6 +233,7 @@ public final class SearchDevice {
 	 * @param query The query.
 	 * @param listener Listener object to be notified about the search's result.
 	 * @throws IllegalArgumentException If query is null.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public void startSearchTweets(Query query, SearchDeviceListener listener) {
 		if (query == null) {
@@ -249,6 +252,7 @@ public final class SearchDevice {
 	 * @param queryString The query string.
 	 * @param listener Listener object to be notified about the search's result.
 	 * @throws IllegalArgumentException If queryString is null/empty.
+	 * @deprecated No longer available in Twitter API v1.1.
 	 */
 	public void startSearchTweets(final String queryString,
 		final SearchDeviceListener listener) {
