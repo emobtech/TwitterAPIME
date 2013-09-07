@@ -62,6 +62,19 @@ public final class HttpResponse {
 		code = conn.getResponseCode();
 		stream = conn.openInputStream();
 	}
+	
+	/**
+	 * <p>
+	 * Close.
+	 * </p>
+	 */
+	void close() {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {}
+		}
+	}
 
 	/**
 	 * <p>

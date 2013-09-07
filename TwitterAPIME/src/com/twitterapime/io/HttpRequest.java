@@ -63,6 +63,13 @@ public final class HttpRequest {
 	
 	/**
 	 * <p>
+	 * Response object.
+	 * </p>
+	 */
+	private HttpResponse response;
+	
+	/**
+	 * <p>
 	 * xAuthSigner object.
 	 * </p>
 	 */
@@ -170,7 +177,9 @@ public final class HttpRequest {
 			setBodyParameters(conn);
 		}
 		//
-		return new HttpResponse(conn);
+		response = new HttpResponse(conn);
+		//
+		return response;
 	}
 	
 	/**
@@ -180,6 +189,11 @@ public final class HttpRequest {
 	 * @throws IOException If an I/O error occurs.
 	 */
 	public void close() throws IOException {
+		if (response != null) {
+			response.close();
+			response = null;
+		}
+		//
 		if (conn != null) {
 			conn.close();
 			conn = null;
