@@ -31,126 +31,82 @@ Version | Date | Contents
 1.1 | 01/05/2010 | 1. Tweet post.<br/> 2. User account authentication.<br/> 3. Rate limit status access for REST API.<br/> 4. Android support.<br/> 5. Some bug fixes and optimizations.
 1.0 | 10/29/2009 | 1. Tweet search.<br/> 2. Java ME support.
 
-= <span id="Functionalities">Functionalities</span> =
-Twitter API ME attempts to provide support for most functionalities available by [http://dev.twitter.com Twitter API]. See below all available functionalities:
+## Functionalities
 
-{|- border="1"
-!Functionality
-!Description
-|-
-|Tweet search*
-|Create your own queries and search for all ''tweets'' that match your criteria.
-|-
-|Tweet post
-|Submit your ''tweets'' in a very easy and quick way. Inclusive with geo-location information.
-|-
-|Tweet repost (''retweet'')
-|Resubmit that interesting ''tweet'', so that your friends can also see it.
-|-
-|User account authentication
-|Check the credentials of a given user account via xAuth and OAuth.
-|-
-|User account data access
-|Access the profile information (e.g. name, URL, location, etc.) of a given user account.
-|-
-|Update user profile
-|Update user profile data, i.e., name, description, URL and location.
-|-
-|Rate limit status access*
-|Check your current rate limit status (Search and REST API) and be aware of how many requests left.
-|-
-|Direct Message sending
-|Submit your private ''tweets'' in a very easy and quick way.
-|-
-|Timeline access
-|Access the main timelines (e.g. ''Public*'', ''Home'', ''Mentions'', ''Retweets of me'',  etc.) and see what all your friends are texting.
-|-
-|Friendship management
-|Manage (follow/block) who you follow and your followers. In addition, you can also access your friends/followers list.
-|-
-|Report spam
-|Report a spammer user to Twitter.
-|-
-|Trend Topics search*
-|Search for the most popular topics being discussed on Twitter.
-|-
-|List management
-|Manage your lists, create, update, add/remove members, subscriptions, access timeline, etc.
-|-
-|Reply Tweet
-|Reply those tweets adding your comments to them.
-|-
-|Favorite/Unfavorite Tweet
-|Mark those tweets you like as favorite.
-|-
-|User Search
-|Search for users using part of their names or usernames.
-|-
-|User Lookup
-|Get the full data about a given user.
-|}
+Twitter API ME attempts to provide support for most functionalities available by [Twitter API](http://dev.twitter.com). See below all available functionalities:
 
-'''* Deprecated due Twitter API v1.1 changes.'''
+Functionality | Description
+------------- | -----------
+Tweet search* | Create your own queries and search for all "tweets" that match your criteria.
+Tweet post | Submit your "tweets" in a very easy and quick way. Inclusive with geo-location information.
+Tweet repost ("retweet") | Resubmit that interesting "tweet", so that your friends can also see it.
+User account authentication | Check the credentials of a given user account via xAuth and OAuth.
+User account data access | Access the profile information (e.g. name, URL, location, etc.) of a given user account.
+Update user profile | Update user profile data, i.e., name, description, URL and location.
+Rate limit status access* | Check your current rate limit status (Search and REST API) and be aware of how many requests left.
+Direct Message sending | Submit your private "tweets" in a very easy and quick way.
+Timeline access | Access the main timelines (e.g. "Public*", "Home", "Mentions", ""Retweets of me",  etc.) and see what all your friends are texting.
+Friendship management | Manage (follow/block) who you follow and your followers. In addition, you can also access your friends/followers list.
+Report spam | Report a spammer user to Twitter.
+Trend Topics search* | Search for the most popular topics being discussed on Twitter.
+List management | Manage your lists, create, update, add/remove members, subscriptions, access timeline, etc.
+Reply Tweet | Reply those tweets adding your comments to them.
+Favorite/Unfavorite Tweet | Mark those tweets you like as favorite.
+User Search | Search for users using part of their names or usernames.
+User Lookup | Get the full data about a given user.
 
-[[#tablecont|(back to top)]]
+*Deprecated due Twitter API v1.1 changes.
 
-= <span id="AuthMethods">Authentication Methods</span> =
-Twitter API ME supports all [https://dev.twitter.com/docs/auth authentication methods] provided by Twitter API. Each style in turn has its own particularity and can be used according to each application's needs and capabilities. See below all the methods:
+## Authentication Methods
 
-[[#tablecont|(back to top)]]
+Twitter API ME supports all [authentication methods](https://dev.twitter.com/docs/auth) provided by Twitter API. Each style in turn has its own particularity and can be used according to each application's needs and capabilities. See below all the methods:
 
-=== <span id="AuthxAuth">1. Authenticating with xAuth</span> ===
-xAuth is an authentication method supported by Twitter API ME, which is more suitable for mobile applications. This method is much safer than [http://en.wikipedia.org/wiki/Basic_access_authentication Basic access authentication] used previously, which was deprecated. To work with xAuth is very simple, however, there are some requirements: First, you need to get your [https://dev.twitter.com/apps/new application registered] to Twitter API, so they can provide to you some access keys (i.e. consumer and secret). Second, you must send an e-mail to [mailto:api@twitter.com api@twitter.com], requesting xAuth privileges for your app. You can't skip these steps, otherwise you will not be able to authenticate. To know more about this process, access [https://dev.twitter.com/docs/oauth/xauth xAuth].
+## 1. Authenticating with xAuth
 
-Be aware this request may take a few days to be processed. In addition, be also advised to request it just when your app is about to be released. Twitter API has been very restrictive on granting xAuth permission to apps, because they want everybody go [[#AuthOAuth|OAuth]].
+xAuth is an authentication method supported by Twitter API ME, which is more suitable for mobile applications. This method is much safer than [Basic access authentication](http://en.wikipedia.org/wiki/Basic_access_authentication) used previously, which was deprecated. To work with xAuth is very simple, however, there are some requirements: First, you need to get your [application registered](https://dev.twitter.com/apps/new) to Twitter API, so they can provide to you some access keys (i.e. consumer and secret). Second, you must send an e-mail to [api@twitter.com](mailto:api@twitter.com), requesting xAuth privileges for your app. You can't skip these steps, otherwise you will not be able to authenticate. To know more about this process, access [xAuth](https://dev.twitter.com/docs/oauth/xauth).
 
-It is also important to point out that xAuth has now some limitations, due to a [https://dev.twitter.com/docs/application-permission-model policy change] by Twitter API. For instance, by using xAuth, your app will no longer be able to access Direct Messages. So if you need this type of resource, you must go OAuth.
+Be aware this request may take a few days to be processed. In addition, be also advised to request it just when your app is about to be released. Twitter API has been very restrictive on granting xAuth permission to apps, because they want everybody go **OAuth**.
 
-Twitter API ME's xAuth classes are fully reusable by any other API or app, so you can use it to work with any other xAuth service, besides Twitter. So whether you are looking for just a xAuth lib, Twitter API ME provides it for you. To know more about it, read this [http://j2megroup.blogspot.com/2010/10/xauth-lib-oauth-made-easy.html article].
+It is also important to point out that xAuth has now some limitations, due to a [policy change](https://dev.twitter.com/docs/application-permission-model) by Twitter API. For instance, by using xAuth, your app will no longer be able to access Direct Messages. So if you need this type of resource, you must go OAuth.
 
-[[#tablecont|(back to top)]]
+Twitter API ME's xAuth classes are fully reusable by any other API or app, so you can use it to work with any other xAuth service, besides Twitter. So whether you are looking for just a xAuth lib, Twitter API ME provides it for you. To know more about it, read this [article](http://j2megroup.blogspot.com/2010/10/xauth-lib-oauth-made-easy.html).
 
-=== <span id="AuthSingleToken">2. Authenticating with Single Access Token</span> ===
-Twitter API ME also supports '''Single Access Token''' authentication method, which is ideal for applications with single-user use cases. This method has the same steps mentioned above on xAuth, on the other hand there is no need to request any privilege to Twitter API to start using it, which also turns it into a suitable approach to be used during development phase. However, any request sent to Twitter will be on your behalf. So you will not be able to authenticate with other accounts, but only with yours. For further information, access [http://dev.twitter.com/pages/oauth_single_token Single-user OAuth].
+## 2. Authenticating with Single Access Token
 
-[[#tablecont|(back to top)]]
+Twitter API ME also supports **Single Access Token** authentication method, which is ideal for applications with single-user use cases. This method has the same steps mentioned above on xAuth, on the other hand there is no need to request any privilege to Twitter API to start using it, which also turns it into a suitable approach to be used during development phase. However, any request sent to Twitter will be on your behalf. So you will not be able to authenticate with other accounts, but only with yours. For further information, access [Single-user OAuth](http://dev.twitter.com/pages/oauth_single_token).
 
-=== <span id="AuthOAuth">3. Authenticating with OAuth</span> ===
+## 3. Authenticating with OAuth
+
 OAuth is the official authentication method provided by Twitter API and also supported by Twitter API ME. All other methods are derived from OAuth, in order to provide more options for apps according to their needs and capabilities. On the other hand, Twitter recommends that all apps go OAuth, because is safer for users, since there is no way apps get access to their passwords.
 
-To start working with OAuth, the developers just need to get their [https://dev.twitter.com/apps/new apps registered] on Twitter API, in order to get the app's keys (consumer and secret). In addition, a callback Url must also be informed. This Url is important, because it is used to redirect to the app, as soon as the authentication process is completed. No permission request is necessary.
+To start working with OAuth, the developers just need to get their [apps registered](https://dev.twitter.com/apps/new) on Twitter API, in order to get the app's keys (consumer and secret). In addition, a callback Url must also be informed. This Url is important, because it is used to redirect to the app, as soon as the authentication process is completed. No permission request is necessary.
 
 Since the whole authentication process is performed in a web page provided by Twitter API, your app must be able to support any type of browser integration. At least to open an external browser. Otherwise, it is not possible to work with OAuth. Fortunately, all platforms supported by Twitter API ME provides any type of browser integration. So, you are good go!
 
-To help you get started with OAuth as fast as possible, a sample app was implemented in all supported platforms, demonstrating how to integrate OAuth into your app. Get it from our [http://kenai.com/projects/twitterapime/downloads/directory/Miscellaneous download] section.
+To help you get started with OAuth as fast as possible, a sample app was implemented in all supported platforms, demonstrating how to integrate OAuth into your app. Get it from our [download](http://kenai.com/projects/twitterapime/downloads/directory/Miscellaneous) section.
 
-To know more about this process, access [https://dev.twitter.com/docs/auth/oauth Using OAuth].
+To know more about this process, access [Using OAuth](https://dev.twitter.com/docs/auth/oauth).
 
-[[#tablecont|(back to top)]]
+## 4. Authenticating with Out-of-band/PIN Code Authentication
 
-=== <span id="AuthOOB">4. Authenticating with Out-of-band/PIN Code Authentication</span> ===
-For applications that really can't fully integrate with browser, but at least can open an external one, Twitter API provides the out-of-band/PIN code authentication mode, also known as '''oob'''.
+For applications that really can't fully integrate with browser, but at least can open an external one, Twitter API provides the out-of-band/PIN code authentication mode, also known as **oob**.
 
 This authentication flow is almost identical to OAuth except instead of being directed back to your website (or app) the user is presented with a PIN code. The user is then asked to type this PIN code into your app which will then complete the authentication process. Since there is redirection, a callback Url is not required.
 
-Twitter API ME also supports oob for all platforms. Except, for Java ME, which it is the only one method to work with OAuth so far, because LDCUI does not provide any browser component. In this case, the browser integration is performed via ''MIDlet.platformRequest()'' method. So, as soon as the PIN is presented, the user must close the browser and then return to the app to enter the PIN to conclude the authentication.
+Twitter API ME also supports oob for all platforms. Except, for Java ME, which it is the only one method to work with OAuth so far, because LDCUI does not provide any browser component. In this case, the browser integration is performed via *MIDlet.platformRequest()* method. So, as soon as the PIN is presented, the user must close the browser and then return to the app to enter the PIN to conclude the authentication.
 
-[[#tablecont|(back to top)]]
+## Supported Platforms
 
-= <span id="SupPlats">Supported Platforms</span> =
-As advanced in the introduction, a great characteristic of Twitter API ME is the capability of running on different Java platforms. The core components are implemented using POJOs (Plain Old Java Objects) and the most common packages and classes, e.g., ''java.lang'', ''java.util'', ''Vector'', ''String'', etc. This way, Twitter API ME can be present on most Java platforms: from the most compact until the most complete.
+As advanced in the introduction, a great characteristic of Twitter API ME is the capability of running on different Java platforms. The core components are implemented using POJOs (Plain Old Java Objects) and the most common packages and classes, e.g., *java.lang*, *java.util*, *Vector*, *String*, etc. This way, Twitter API ME can be present on most Java platforms: from the most compact until the most complete.
 
 The current three Java platforms supported by Twitter API ME are:
 * Java Micro Edition (MIDP 2.0 / CLDC 1.0) or newer
-* Android 1.5 or newer ''(also run on Java SE 1.4 or newer)''
+* Android 1.5 or newer *(also run on Java SE 1.4 or newer)*
 * RIM OS 4.6 or newer (Blackberry)
 
-[[#tablecont|(back to top)]]
+## Sample Codes
 
-= <span id="SampleCodes">Sample Codes</span> =
 In order to help you to quick learn how to work with Twitter API ME, here it goes some sample codes showing how to perform some common tasks.
-
-[[#tablecont|(back to top)]]
 
 === <span id="Search4Tweets">1. Search for Tweets</span> ===
 All samples below are related to ''tweet'' search functionality. Be aware that [https://dev.twitter.com/docs/api/1/get/search Twitter Search API] JUST returns popular and/or recent ''tweets''. In other words, do NOT expect to retrieve old ''tweets''.
