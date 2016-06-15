@@ -247,14 +247,15 @@ To help you get started with OAuth as fast as possible, a sample app was impleme
 
 ## 3. Retrieve Rate Limit Status
 
-All codes below are related to Twitter's rate limiting functionality, which you can keep tracking of current values via Twitter API ME. Twitter implements rate limits for both Search and REST API, in order to avoid attacks. For further information on rate limiting, access [http://dev.twitter.com/pages/rate-limiting Twitter API - Rate Limiting].
+All codes below are related to Twitter's rate limiting functionality, which you can keep tracking of current values via Twitter API ME. Twitter implements rate limits for both Search and REST API, in order to avoid attacks. For further information on rate limiting, access [Twitter API - Rate Limiting](http://dev.twitter.com/pages/rate-limiting).
 
-In order to keep tracking of current status, Twitter API ME provides means to access both APIs status. For that, you will have to work with the following classes: ''SearchDevice'', ''UserAccountManager'' and ''RateLimitStatus''.
+In order to keep tracking of current status, Twitter API ME provides means to access both APIs status. For that, you will have to work with the following classes: *SearchDevice*, *UserAccountManager* and *RateLimitStatus*.
 
-''SearchDevice'' provides methods to access the status from Search API. On the other hand, ''UserAccountManager'' accesses the data related to REST API. ''RateLimitStatus'' in turn just wraps a set of values related to rate limiting status.
+*SearchDevice* provides methods to access the status from Search API. On the other hand, *UserAccountManager* accesses the data related to REST API. *RateLimitStatus* in turn just wraps a set of values related to rate limiting status.
 
-'''- Check Search API status:'''
-<pre name="java">
+* **Check Search API status:**
+
+```java
 ...
 SearchDevice sd = SearchDevice.getInstance();
 RateLimitStatus rls = sd.getRateLimitStatus();
@@ -263,10 +264,11 @@ System.out.println(rls.getString(MetadataSet.RATELIMITSTATUS_HOURLY_LIMIT));
 System.out.println(rls.getString(MetadataSet.RATELIMITSTATUS_RESET_TIME));
 System.out.println(rls.getString(MetadataSet.RATELIMITSTATUS_REMAINING_HITS));
 ...
-</pre>
+```
 
-'''- Check REST API status:'''
-<pre name="java">
+* **Check REST API status:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -279,21 +281,21 @@ if (m.verifyCredential()) {
   System.out.println(rls.getString(MetadataSet.RATELIMITSTATUS_REMAINING_HITS));
 }
 ...
-</pre>
+```
 
-It is important to point out that, Search API limit considers the requests from a given IP address. On other hand, REST API considers the requesting user. That's why REST API requests the user to be authenticated. In additional, in case your code is throwing ''LimitExceededException'', be aware you are being rated by Twitter API, because you hit your limit.
+It is important to point out that, Search API limit considers the requests from a given IP address. On other hand, REST API considers the requesting user. That's why REST API requests the user to be authenticated. In additional, in case your code is throwing *LimitExceededException*, be aware you are being rated by Twitter API, because you hit your limit.
 
-[[#tablecont|(back to top)]]
+## 4. Post Tweets
 
-=== <span id="PostTweets">4. Post Tweets</span> ===
-All codes below are related to Twitter's main functionality: posting ''tweets''. Twitter API ME provides a very straightforward way to work with this functionality. Which could not be different, since how easy and practical this functionality is. To post a ''tweet'', the user authentication is required.
+All codes below are related to Twitter's main functionality: posting *tweets*. Twitter API ME provides a very straightforward way to work with this functionality. Which could not be different, since how easy and practical this functionality is. To post a *tweet*, the user authentication is required.
 
-In order to post a ''tweet'', you will have to work with the following classes: ''Tweet'' and ''TweetER''.
+In order to post a *tweet*, you will have to work with the following classes: *Tweet* and *TweetER*.
 
-''Tweet'' is the class that basically wraps the ''tweet''`s info (i.e. user name, text, source, etc) and ''TweetER'' is responsible for managing the posting process with Twitter API.
+*Tweet* is the class that basically wraps the *tweet*`s info (i.e. user name, text, source, etc) and *TweetER* is responsible for managing the posting process with Twitter API.
 
-'''- Post a new ''tweet'':'''
-<pre name="java">
+* **Post a new *tweet*:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -305,12 +307,13 @@ if (m.verifyCredential()) {
   t = ter.post(t);
 }
 ...
-</pre>
+```
 
-The returned ''tweet'' is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
+The returned *tweet* is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
 
-'''- Post a geo-located ''tweet'':'''
-<pre name="java">
+* **Post a geo-located *tweet*:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -323,12 +326,13 @@ if (m.verifyCredential()) {
   t = ter.post(t);
 }
 ...
-</pre>
+```
 
-Important to point out that in order to be able to post geo-located ''tweets'', first off you need to enable "Tweet Location" setting in your user account, on Twitter website. Otherwise, you will not see any location data in your ''tweets''.
+Important to point out that in order to be able to post geo-located *tweets*, first off you need to enable "Tweet Location" setting in your user account, on Twitter website. Otherwise, you will not see any location data in your *tweets*.
 
-'''- Repost a ''tweet'' (''retweet''):'''
-<pre name="java">
+* **Repost a *tweet* (*retweet*):**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -340,19 +344,19 @@ if (m.verifyCredential()) {
   t = ter.repost(t);
 }
 ...
-</pre>
+```
 
-The ''TweetER.repost(Tweet)'' method just requires that ''tweet''`s ID be informed to perform the operation.
+The *TweetER.repost(Tweet)* method just requires that *tweet*`s ID be informed to perform the operation.
 
-[[#tablecont|(back to top)]]
+## 5. Send Direct Messages
 
-=== <span id="SendDirMsg">5. Send Direct Messages</span> ===
-All codes below are related to Twitter's functionality of sending Direct Messages. A DM, as it is popularly known, is just like a ''tweet'', but it is kept private between sender and recipient. Just like posting a ''tweet'', Twitter API ME provides a very straightforward way to work with this functionality. To send a DM, the user authentication is also required.
+All codes below are related to Twitter's functionality of sending Direct Messages. A DM, as it is popularly known, is just like a *tweet*, but it is kept private between sender and recipient. Just like posting a *tweet*, Twitter API ME provides a very straightforward way to work with this functionality. To send a DM, the user authentication is also required.
 
-In order to send a DM, you will work with the same classes as posting a ''tweet''.
+In order to send a DM, you will work with the same classes as posting a *tweet*.
 
-'''- Send a Direct Message:'''
-<pre name="java">
+* **Send a Direct Message:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -364,19 +368,19 @@ if (m.verifyCredential()) {
   t = ter.send(t);
 }
 ...
-</pre>
+```
 
-The returned ''tweet'' is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
+The returned *tweet* is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
 
-[[#tablecont|(back to top)]]
+## 6. Friendship Management
 
-=== <span id="FriendMngmt">6. Friendship Management</span> ===
-All codes below are related to Twitter's friendship management functionalities. Follow people and be followed are so important as posting ''tweets''. Otherwise, there would not be reason to ''tweet'', right? Twitter API ME provides means so you can manage the people you follow and your followers. Even being easy to manage your friends, your authentication is also required for this.
+All codes below are related to Twitter's friendship management functionalities. Follow people and be followed are so important as posting *tweets*. Otherwise, there would not be reason to *tweet*, right? Twitter API ME provides means so you can manage the people you follow and your followers. Even being easy to manage your friends, your authentication is also required for this.
 
-To manage your friends, you will only work with the ''UserAccount'' and ''UserAccountManager/FriendshipManager'' classes.
+To manage your friends, you will only work with the *UserAccount* and *UserAccountManager/FriendshipManager* classes.
 
-'''- Follow a friend:'''
-<pre name="java">
+* **Follow a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -387,10 +391,11 @@ if (m.verifyCredential()) {
   ua = m.follow(ua);
 }
 ...
-</pre>
+```
 
-'''- Unfollow a friend:'''
-<pre name="java">
+* **Unfollow a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -401,12 +406,13 @@ if (m.verifyCredential()) {
   ua = m.unfollow(ua);
 }
 ...
-</pre>
+```
 
-The returned ''UserAccount'' object is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
+The returned *UserAccount* object is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
 
-'''- Check whether you are following a friend:'''
-<pre name="java">
+* **Check whether you are following a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -419,10 +425,11 @@ if (m.verifyCredential()) {
   }
 }
 ...
-</pre>
+```
 
-'''- Block a friend:'''
-<pre name="java">
+* **Block a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -432,11 +439,12 @@ if (m.verifyCredential()) {
 
   ua = m.block(ua);
 }
-...
+```
 </pre>
 
-'''- Unblock a friend:'''
-<pre name="java">
+* **Unblock a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -447,10 +455,11 @@ if (m.verifyCredential()) {
   ua = m.unblock(ua);
 }
 ...
-</pre>
+```
 
-'''- Check whether you are blocking a friend:'''
-<pre name="java">
+* **Check whether you are blocking a friend:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -463,10 +472,11 @@ if (m.verifyCredential()) {
   }
 }
 ...
-</pre>
+```
 
-'''- Get your friends ID list:'''
-<pre name="java">
+* **Get your friends ID list:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -478,12 +488,13 @@ if (m.verifyCredential()) {
   ids = fmngr.getFriendsID(QueryComposer.count(5)); //get up to 5 friends ID.
 }
 ...
-</pre>
+```
 
 Be aware this method can take too long to return and consume a lot of memory, in case you have a high number of friends. In this case, we suggest you limit the number of IDs to be returned.
 
-'''- Get your followers ID list:'''
-<pre name="java">
+* **Get your followers ID list:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -496,11 +507,13 @@ if (m.verifyCredential()) {
   ...
 }
 ...
-</pre>
-Once you get your friends/followers ID, you can use the method ''UserAccountManager.getUserAccount(UserAccount("user_id"))'' to fetch the full profile of a given user by his/her ID.
+```
 
-'''- Get your pending follower request list:'''
-<pre name="java">
+Once you get your friends/followers ID, you can use the method *UserAccountManager.getUserAccount(UserAccount("user_id"))* to fetch the full profile of a given user by his/her ID.
+
+* **Get your pending follower request list:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -511,10 +524,11 @@ if (m.verifyCredential()) {
   ...
 }
 ...
-</pre>
+```
 
-'''- Get your pending friend request list:'''
-<pre name="java">
+* **Get your pending friend request list:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -525,9 +539,7 @@ if (m.verifyCredential()) {
   ...
 }
 ...
-</pre>
-
-[[#tablecont|(back to top)]]
+```
 
 === <span id="GetTimelines">7. Get Timelines</span> ===
 All codes below are related to Twitter's timelines. A timeline is a list of ''tweets'' chronologically ordered. The most famous timeline is the one that is shown as soon as you access your Twitter's home, which shows all ''tweets'' from people you follow. Besides ''Home'' timeline, Twitter API ME still provides access to others timelines, i.e., ''Public'', ''User'', ''Mentions'' and ''Direct Messages''. Except ''Public'' one, the others require user authentication.
