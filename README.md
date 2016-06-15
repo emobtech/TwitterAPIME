@@ -850,8 +850,6 @@ In case of Twitter API ME has brought good benefits for you and/or your company,
 
 ## Apps Powered by Twitter API ME
 
-See below some apps that are powered by Twitter API ME:
-
 * [TwAPIme for Android](https://market.android.com/details?id=com.twapime.app)
 * [Sountracker](http://www.soundtracker.fm/)
 * [EcoTweet](http://www.ecotweet.com/)
