@@ -1,102 +1,35 @@
-# Twitter API ME Wiki ([[#Donate|Support us!]]) ([http://market.android.com/details?id=com.twapime.app Check out TwAPIme])=
+# Twitter API ME
 
-'''Twitter API ME''' is a compelling and well defined API for Java developers who wish to develop applications that provide any type of access to Twitter's services. The API provides support for the main and more popular services on Twitter, e.g., ''tweet'' searching and posting. Each provided functionality in turn is very straightforward to use, just like Twitter's philosophy itself.
+**Twitter API ME** is a compelling and well defined API for Java developers who wish to develop applications that provide any type of access to Twitter's services. The API provides support for the main and more popular services on Twitter, e.g., ''tweet'' searching and posting. Each provided functionality in turn is very straightforward to use, just like Twitter's philosophy itself.
 
 Another great characteristic of Twitter API ME is the capability of running on different Java platforms. In other words, you can use the API to write applications for Java SE, Java ME, Android, RIM or any other Java compliant platform.
 
-====<span id="tablecont">Table of Contents:</span>====
-#[[#History|History]]
-#[[#Licensing|Licensing]]
-#[[#UpdateHistory|Update History]]
-#[[#Functionalities|Functionalities]]
-#[[#SupPlats|Supported Platforms]]
-#[[#AuthMethods|Authentication Methods]]
-##[[#AuthxAuth|Authenticating with xAuth]]
-##[[#AuthSingleToken|Authenticating with Single Access Token]]
-##[[#AuthOAuth|Authenticating with OAuth]]
-##[[#AuthOOB|Authenticating with Out-of-band/PIN Code Authentication]]
-#[[#SampleCodes|Sample Codes]]
-##[[#Search4Tweets|Search for Tweets]]
-##[[#AuthUser|Authenticate User]]
-##[[#RetRateLimSts| Retrieve Rate Limit Status]]
-##[[#PostTweets|Post Tweets]]
-##[[#SendDirMsg|Send Direct Messages]]
-##[[#FriendMngmt|Friendship Management]]
-##[[#GetTimelines|Get Timelines]]
-##[[#UpdateProfile|Update User Profile]]
-##[[#ReportSpam|Report Spam]]
-##[[#Search4TrendTopics|Search for Trend Topics]]
-##[[#TweetEntities|Tweet Entities]]
-#[[#ExpSup|Express Support]]
-#[[#AppsPowered|Apps Powered by Twitter API ME]]
-#[[#Donate|Donation]]
-#[[#SeeAlso|See Also]]
-#[[#References|References]]
-#[[#ExtLinks|External Links]]
+## History
 
-= <span id="History">History</span> =
 The history of Twitter API ME development is quite simple and short. Everything started on August/2009, during Ernandes' vacation. As he did not have many things to do and was very curious on Twitter, Ernandes decided to exercise his creative leisure designing and implementing an API to access Twitter's services. As an enthusiast of mobile development, he first decided to design an API for Java ME. However, he did not last much to change his mind and then decide to write an API to run on any Java platform.
 
 The first version took about two months to be released, since Ernandes just worked during his free time. On October 29th, the version 1.0 was published only providing the searching ''tweets'' functionality. As developers started to meet Twitter API ME, Ernandes continued to work on new functionalities, mainly the one for posting ''tweets''. Two months later, on Jan 5th, 2010, the version 1.1 was publishing, now supporting ''tweet'' posting.
 
-[[#tablecont|(back to top)]]
+## Licensing
 
-= <span id="Licensing">Licensing</span> =
-Twitter API ME Project is under two licenses: '''[http://en.wikipedia.org/wiki/GNU_General_Public_License GNU General Public License v2.0]''' regarding the source code and '''[http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License GNU Lesser General Public License v3.0]''' for the binaries. It means that now you can develop proprietary applications with Twitter API ME if you merely link them to API's binaries.
+Twitter API ME Project is under two licenses: **[GNU General Public License v2.0](http://en.wikipedia.org/wiki/GNU_General_Public_License)** regarding the source code and **[GNU Lesser General Public License v3.0](http://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License)** for the binaries. It means that now you can develop proprietary applications with Twitter API ME if you merely link them to API's binaries.
 
-[[#tablecont|(back to top)]]
+## Update History
 
-= <span id="UpdateHistory">Update History</span> =
-Twitter API ME is now at its tenth release ('''1.9'''). This last one only brings updates to new Twitter API v1.1, besides some bug fixes.
+Twitter API ME is now at its tenth release (**1.9**). This last one only brings updates to new Twitter API v1.1, besides some bug fixes.
 
-{|- border="1"
-!Version
-!Date
-!Contents
-|-
-|<center>1.9</center>
-|<center>06/15/2011</center>
-|<ul><li>Updated to Twitter API v1.1</li><li>Some classes and methods deprecated due API changes</li></ul>
-
-|-
-|<center>1.8</center>
-|<center>10/06/2011</center>
-|<ul><li>OAuth support</li><li>RIM connection string customization</li><li>Improvement on RIM data connection establishment</li><li>Geo-located Trend search based on Yahoo! Where On Earth ID.</li></ul>
-|-
-|<center>1.7</center>
-|<center>06/10/2011</center>
-|<ul><li>Reply tweet</li><li>Timeline of favorite tweets</li><li>Favorite/unfavorite tweet</li><li>User search and lookup</li><li>Get friends and followers</li><li>Get friendship details between two users</li></ul>
-|-
-|<center>1.6</center>
-|<center>02/14/2011</center>
-|<ul><li>Retweets to me timeline</li><li>Retweets by me timeline</li><li>Tweets from list timeline</li><li>List management (e.g. create, update, memberships, subscriptions, etc)</li><li>Special character (*) in password bug fix</li></ul>
-|-
-|<center>1.5</center>
-|<center>10/31/2010</center>
-|<ul><li>List of pending friends/followers request</li><li>Report spam</li><li>Retweets of me timeline</li><li>Trend Topics search</li><li>''Tweet's'' entities</li><li>Retrieval of access token from UserAccountManager class</li></ul>
-|-
-|<center>1.4</center>
-|<center>08/29/2010</center>
-|<ul><li>Single Access Token auth</li><li>Geo-located tweets</li><li>Friends/Followers list</li><li>Update user profile</li></ul>
-|-
-|<center>1.3</center>
-|<center>06/14/2010</center>
-|<ul><li>xAuth support</li><li>UTF-8 characters support</li><li>Possibility to change service URLs used by API</li></ul>
-|-
-|<center>1.2</center>
-|<center>04/28/2010</center>
-|<ul><li>Tweet repost (''retweet'')</li><li>Direct message posting and retrieval</li><li>Friendship management (e.g. follow, block, etc.)</li><li>Timelines access</li><li>Rate limit status access for Search API</li></ul>
-|-
-|<center>1.1</center>
-|<center>01/05/2010</center>
-|<ul><li>Tweet post</li><li>User account authentication</li><li>Rate limit status access for REST API</li><li>Android support</li><li>Some bug fixes and optimizations</li></ul>
-|-
-|<center>1.0</center>
-|<center>10/29/2009</center>
-|<ul><li>Tweet search</li><li>Java ME support</li></ul>
-|}
-
-[[#tablecont|(back to top)]]
+Version | Date | Contents
+------- | ---- | --------
+1.9 | 06/15/2011 | 1. Updated to Twitter API v1.1.<br/> 2. Some classes and methods deprecated due API changes.
+1.8 | 10/06/2011 | 1. RIM connection string customization.<br/> 2. Improvement on RIM data connection establishment.<br/> 3. Geo-located Trend search based on Yahoo! Where On Earth ID.
+1.7 | 06/10/2011 | 1. Reply tweet.<br/> 2. Timeline of favorite tweets.<br/> 3. Favorite/unfavorite tweet.<br/> 4. User search and lookup.<br/> 5. Get friends and followers.<br/> 6. Get friendship details between two users.
+1.6 | 02/14/2011 | 1. Retweets to me timeline.<br/> 2. Retweets by me timeline.<br/> 3. Tweets from list timeline.<br/> 4. List management (e.g. create, update, memberships, subscriptions, etc).<br/> 5. Special character (*) in password bug fix.
+1.5 | 10/31/2010 | 1. List of pending friends/followers request.<br/> 2. Report spam.<br/> 3. Retweets of me timeline.<br/> 4. Trend Topics search.<br/> 5. Tweet's entities.<br/> 6. Retrieval of access token from UserAccountManager class.
+1.4 | 08/29/2010 | 1. Single Access Token auth.<br/> 2. Geo-located tweets.<br/> 3. Friends/Followers list.<br/> 4. Update user profile.
+1.3 | 06/14/2010 | 1. xAuth support.<br/> 2. UTF-8 characters support.<br/> 3. Possibility to change service URLs used by API.
+1.2 | 04/28/2010 | 1. Tweet repost ("retweet").<br/> 2. Direct message posting and retrieval.<br/> 3. Friendship management (e.g. follow, block, etc.).<br/> 4. Timelines access.<br/> 5. Rate limit status access for Search API.
+1.1 | 01/05/2010 | 1. Tweet post.<br/> 2. User account authentication.<br/> 3. Rate limit status access for REST API.<br/> 4. Android support.<br/> 5. Some bug fixes and optimizations.
+1.0 | 10/29/2009 | 1. Tweet search.<br/> 2. Java ME support.
 
 = <span id="Functionalities">Functionalities</span> =
 Twitter API ME attempts to provide support for most functionalities available by [http://dev.twitter.com Twitter API]. See below all available functionalities:
