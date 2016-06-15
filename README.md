@@ -805,7 +805,7 @@ if (entity != null) {
 ...
 ```
 
-* **Get hashtags from a *tweet's* enties:**
+* **Get hashtags from a *tweet's* entities:**
 
 ```java
 ...
@@ -821,9 +821,8 @@ if (entity != null) {
 ...
 ```
 
-* **Get user mentions from a *tweet's* enties:**
+* **Get user mentions from a *tweets* entities:**
 
-```
 ```java
 ...
 TweetEntity entity = tweet.getEntity();
@@ -843,7 +842,7 @@ if (entity != null) {
 ...
 ```
 
-If you are missing an important scenario that could also be presented here, please, [let us know]("mailto:support@twitterapime.com).
+If you are missing an important scenario that could also be presented here, please, [let us know](mailto:support@twitterapime.com).
 
 ## Donation
 
