@@ -821,7 +821,7 @@ if (entity != null) {
 ...
 ```
 
-* **Get user mentions from a *tweets* entities:**
+* **Get user mentions from a *tweet's* entities:**
 
 ```java
 ...
