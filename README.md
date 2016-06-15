@@ -61,7 +61,7 @@ User Lookup | Get the full data about a given user.
 
 Twitter API ME supports all [authentication methods](https://dev.twitter.com/docs/auth) provided by Twitter API. Each style in turn has its own particularity and can be used according to each application's needs and capabilities. See below all the methods:
 
-## 1. Authenticating with xAuth
+### 1. Authenticating with xAuth
 
 xAuth is an authentication method supported by Twitter API ME, which is more suitable for mobile applications. This method is much safer than [Basic access authentication](http://en.wikipedia.org/wiki/Basic_access_authentication) used previously, which was deprecated. To work with xAuth is very simple, however, there are some requirements: First, you need to get your [application registered](https://dev.twitter.com/apps/new) to Twitter API, so they can provide to you some access keys (i.e. consumer and secret). Second, you must send an e-mail to [api@twitter.com](mailto:api@twitter.com), requesting xAuth privileges for your app. You can't skip these steps, otherwise you will not be able to authenticate. To know more about this process, access [xAuth](https://dev.twitter.com/docs/oauth/xauth).
 
@@ -71,11 +71,11 @@ It is also important to point out that xAuth has now some limitations, due to a 
 
 Twitter API ME's xAuth classes are fully reusable by any other API or app, so you can use it to work with any other xAuth service, besides Twitter. So whether you are looking for just a xAuth lib, Twitter API ME provides it for you. To know more about it, read this [article](http://j2megroup.blogspot.com/2010/10/xauth-lib-oauth-made-easy.html).
 
-## 2. Authenticating with Single Access Token
+### 2. Authenticating with Single Access Token
 
 Twitter API ME also supports **Single Access Token** authentication method, which is ideal for applications with single-user use cases. This method has the same steps mentioned above on xAuth, on the other hand there is no need to request any privilege to Twitter API to start using it, which also turns it into a suitable approach to be used during development phase. However, any request sent to Twitter will be on your behalf. So you will not be able to authenticate with other accounts, but only with yours. For further information, access [Single-user OAuth](http://dev.twitter.com/pages/oauth_single_token).
 
-## 3. Authenticating with OAuth
+### 3. Authenticating with OAuth
 
 OAuth is the official authentication method provided by Twitter API and also supported by Twitter API ME. All other methods are derived from OAuth, in order to provide more options for apps according to their needs and capabilities. On the other hand, Twitter recommends that all apps go OAuth, because is safer for users, since there is no way apps get access to their passwords.
 
@@ -87,7 +87,7 @@ To help you get started with OAuth as fast as possible, a sample app was impleme
 
 To know more about this process, access [Using OAuth](https://dev.twitter.com/docs/auth/oauth).
 
-## 4. Authenticating with Out-of-band/PIN Code Authentication
+### 4. Authenticating with Out-of-band/PIN Code Authentication
 
 For applications that really can't fully integrate with browser, but at least can open an external one, Twitter API provides the out-of-band/PIN code authentication mode, also known as **oob**.
 
@@ -108,7 +108,7 @@ The current three Java platforms supported by Twitter API ME are:
 
 In order to help you to quick learn how to work with Twitter API ME, here it goes some sample codes showing how to perform some common tasks.
 
-## 1. Search for Tweets
+### 1. Search for Tweets
 
 All samples below are related to *tweet* search functionality. Be aware that [Twitter Search API](https://dev.twitter.com/docs/api/1/get/search) JUST returns popular and/or recent *tweets*. In other words, do NOT expect to retrieve old *tweets*.
 
@@ -164,7 +164,7 @@ Tweet[] twts = s.searchTweets(q);
 ...
 ```
 
-## 2. Authenticate User
+### 2. Authenticate User
 
 All samples below are related to user's authentication process. Twitter API ME supports all authentication methods provided by Twitter API. You can find further information about those methods and their requirements on **Authentication Methods**.
 
@@ -245,7 +245,7 @@ page.login(); //runs asynchronously.
 
 To help you get started with OAuth as fast as possible, a sample app was implemented in all supported platforms, demonstrating how to integrate OAuth into your app. Get it from our [download](http://kenai.com/projects/twitterapime/downloads/directory/Miscellaneous) section.
 
-## 3. Retrieve Rate Limit Status
+### 3. Retrieve Rate Limit Status
 
 All codes below are related to Twitter's rate limiting functionality, which you can keep tracking of current values via Twitter API ME. Twitter implements rate limits for both Search and REST API, in order to avoid attacks. For further information on rate limiting, access [Twitter API - Rate Limiting](http://dev.twitter.com/pages/rate-limiting).
 
@@ -285,7 +285,7 @@ if (m.verifyCredential()) {
 
 It is important to point out that, Search API limit considers the requests from a given IP address. On other hand, REST API considers the requesting user. That's why REST API requests the user to be authenticated. In additional, in case your code is throwing *LimitExceededException*, be aware you are being rated by Twitter API, because you hit your limit.
 
-## 4. Post Tweets
+### 4. Post Tweets
 
 All codes below are related to Twitter's main functionality: posting *tweets*. Twitter API ME provides a very straightforward way to work with this functionality. Which could not be different, since how easy and practical this functionality is. To post a *tweet*, the user authentication is required.
 
@@ -348,7 +348,7 @@ if (m.verifyCredential()) {
 
 The *TweetER.repost(Tweet)* method just requires that *tweet*`s ID be informed to perform the operation.
 
-## 5. Send Direct Messages
+### 5. Send Direct Messages
 
 All codes below are related to Twitter's functionality of sending Direct Messages. A DM, as it is popularly known, is just like a *tweet*, but it is kept private between sender and recipient. Just like posting a *tweet*, Twitter API ME provides a very straightforward way to work with this functionality. To send a DM, the user authentication is also required.
 
@@ -372,7 +372,7 @@ if (m.verifyCredential()) {
 
 The returned *tweet* is same instance as passed as parameter, however it now contains some more info provide by Twitter API.
 
-## 6. Friendship Management
+### 6. Friendship Management
 
 All codes below are related to Twitter's friendship management functionalities. Follow people and be followed are so important as posting *tweets*. Otherwise, there would not be reason to *tweet*, right? Twitter API ME provides means so you can manage the people you follow and your followers. Even being easy to manage your friends, your authentication is also required for this.
 
@@ -541,15 +541,17 @@ if (m.verifyCredential()) {
 ...
 ```
 
-=== <span id="GetTimelines">7. Get Timelines</span> ===
-All codes below are related to Twitter's timelines. A timeline is a list of ''tweets'' chronologically ordered. The most famous timeline is the one that is shown as soon as you access your Twitter's home, which shows all ''tweets'' from people you follow. Besides ''Home'' timeline, Twitter API ME still provides access to others timelines, i.e., ''Public'', ''User'', ''Mentions'' and ''Direct Messages''. Except ''Public'' one, the others require user authentication.
+### 7. Get Timelines
 
-To access the timelines, you will basically work with ''Timeline'' class and ''SearchDeviceListener'' interface.
+All codes below are related to Twitter's timelines. A timeline is a list of *tweets* chronologically ordered. The most famous timeline is the one that is shown as soon as you access your Twitter's home, which shows all *tweets* from people you follow. Besides *Home* timeline, Twitter API ME still provides access to others timelines, i.e., *Public*, *User*, *Mentions* and *Direct Messages*. Except *Public* one, the others require user authentication.
 
-''Timeline'' is responsible for managing with Twitter API the access to timelines' data. ''SearchDeviceListener'' is a interface that you must implement to listen to the events triggered by ''Timeline'', e.g., found ''tweets''. 
+To access the timelines, you will basically work with *Timeline* class and *SearchDeviceListener* interface.
 
-'''- Get Public timeline:'''
-<pre name="java">
+*Timeline* is responsible for managing with Twitter API the access to timelines' data. *SearchDeviceListener* is a interface that you must implement to listen to the events triggered by *Timeline*, e.g., found *tweets*.
+
+* **Get Public timeline:**
+
+```java
 ...
 Timeline tml = Timeline.getInstance();
 
@@ -561,10 +563,11 @@ tml.startGetPublicTweets(new SearchDeviceListener() {
   ...
 };
 ...
-</pre>
+```
 
-'''- Get tweets from Home timeline:'''
-<pre name="java">
+* **Get tweets from Home timeline:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -581,10 +584,11 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-'''- Get latest five tweets from Home timeline:'''
-<pre name="java">
+* **Get latest five tweets from Home timeline:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -602,10 +606,11 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-'''- Get tweets from User timeline:'''
-<pre name="java">
+* **Get tweets from User timeline:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -622,10 +627,11 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-'''- Get tweets from Mentions timeline:'''
-<pre name="java">
+* **Get tweets from Mentions timeline:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -642,10 +648,11 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-'''- Get received tweets from Direct Message timeline:'''
-<pre name="java">
+* **Get received tweets from Direct Message timeline:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -662,10 +669,11 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-'''- Get your ''tweets'' that were ''retweeted'':'''
-<pre name="java">
+* **Get your ''tweets'' that were ''retweeted'':**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -682,19 +690,19 @@ if (m.verifyCredential()) {
   };
 }
 ...
-</pre>
+```
 
-Besides ''SearchDeviceListener.tweetFound(Tweet)'', you can also identify when the inquiry is concluded (''searchCompleted()'') or failed (''searchFailed(Throwable)'').
+Besides *SearchDeviceListener.tweetFound(Tweet)*, you can also identify when the inquiry is concluded (*searchCompleted()*) or failed (*searchFailed(Throwable)*).
 
-[[#tablecont|(back to top)]]
+### 8. Update User Profile
 
-=== <span id="UpdateProfile">8. Update User Profile</span> ===
 All codes below are related to update user profile functionality. Twitter API ME provides a very easy way to update your data. The data you can change via API are name, description, url and location.
 
-In order to update your profile, you will have to work with the following classes: ''UserAccount'' and ''UserAccountManager''.
+In order to update your profile, you will have to work with the following classes: *UserAccount* and *UserAccountManager*.
 
-'''- Update all profile data:'''
-<pre name="java">
+* **Update all profile data:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -711,19 +719,19 @@ if (m.verifyCredential()) {
   newInfo = m.updateProfile(newInfo);
 }
 ...
-</pre>
+```
 
-If you intend to change only one of those data, for instance your name, just provide it. Twitter API ME only sends the available data to be changed. In addition, the object returned by ''updateProfile()'' method contains all data about the user, including new info.
+If you intend to change only one of those data, for instance your name, just provide it. Twitter API ME only sends the available data to be changed. In addition, the object returned by *updateProfile()* method contains all data about the user, including new info.
 
-[[#tablecont|(back to top)]]
+### 9. Report Spam
 
-=== <span id="ReportSpam">9. Report Spam</span> ===
 All codes below are related to report spam functionality. Twitter API ME provides a very easy way to report those disturbing spammer users.
 
-In order to report a spammer, you will have to work with the following classes: ''UserAccount'' and ''UserAccountManager''.
+In order to report a spammer, you will have to work with the following classes: *UserAccount* and *UserAccountManager*.
 
-'''- Report a Spammer:'''
-<pre name="java">
+* **Report a Spammer:**
+
+```java
 ...
 Credential c = new Credential(...);
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -734,54 +742,56 @@ if (m.verifyCredential()) {
   ...
 }
 ...
-</pre>
+```
 
-The ''UserAccount'' object returned by ''reportSpam()'' contains the full data about the spammer user.
+The *UserAccount* object returned by *reportSpam()* contains the full data about the spammer user.
 
-[[#tablecont|(back to top)]]
+### 10. Search for Trend Topics
 
-=== <span id="Search4TrendTopics">10. Search for Trend Topics</span> ===
-All codes below are related to ''Trend Topic'' searching functionality. A Trend Topic consists of a given subject being discussed on Twitter. To perform a search, you will basically need to work with two classes: ''TrendTopics'' and ''Topic''.
+All codes below are related to *Trend Topic* searching functionality. A Trend Topic consists of a given subject being discussed on Twitter. To perform a search, you will basically need to work with two classes: *TrendTopics* and *Topic*.
 
 Topic is the class that basically wraps the trend topic's info (i.e. text, query and date) and TrendTopics is responsible for managing the searching process with Twitter API.
 
-'''- Search for trend topics being discussed now:'''
-<pre name="java">
+* **Search for trend topics being discussed now:**
+
+```java
 ...
 TrendTopics tts = TrendTopics.getInstance();
 Topic[] topics = tts.searchNowTopics(null);
 ...
-</pre>
+```
 
-'''- Search for trend topics being discussed along the day:'''
-<pre name="java">
+* **Search for trend topics being discussed along the day:**
+
+```java
 ...
 TrendTopics tts = TrendTopics.getInstance();
 Topic[] topics = tts.searchDailyTopics(null);
 ...
-</pre>
+```
 
-'''- Search for trend topics being discussed along the week:'''
-<pre name="java">
+* **Search for trend topics being discussed along the week:**
+
+```java
 ...
 TrendTopics tts = TrendTopics.getInstance();
 Topic[] topics = tts.searchWeeklyTopics(null);
 ...
-</pre>
+```
 
-Daily and weekly searches support a date filter, where you will get only the trend topics from a given date. For that, use ''QueryComposer.date(Date)'' method to produce the query.
+Daily and weekly searches support a date filter, where you will get only the trend topics from a given date. For that, use *QueryComposer.date(Date)* method to produce the query.
 
-[[#tablecont|(back to top)]]
+### 11. Tweet Entities
 
-=== <span id="TweetEntities">11. Tweet Entities</span> ===
-All codes below are related to ''Tweet Entities'' retrieval functionality. A ''tweet's'' entity is a piece of information contained in ''tweet's'' text, that may be interesting for developers, e.g., urls, user mentions and hashtags. For further information on Tweet Entities, access [http://dev.twitter.com/pages/tweet_entities Tweet Entities].
+All codes below are related to *Tweet Entities* retrieval functionality. A *tweet's* entity is a piece of information contained in *tweet's* text, that may be interesting for developers, e.g., urls, user mentions and hashtags. For further information on Tweet Entities, access [Tweet Entities](http://dev.twitter.com/pages/tweet_entities).
 
-Tweet Entity data is available in most functionalities of Twitter API ME that involves ''Tweet'' class, i.e., posting, reposting, timelines and find. It is important to point out, that Search API does '''not''' return tweet entities, so you will not get any entity from ''tweets'' returned by ''SearchDevice'' class. For timelines, you need to specify in query parameter, that you the entities to be returned. In this case, just use the method ''QueryComposer.includeEntities()''. It is necessary, since entities increase the volume of data transmitted from Twitter.
+Tweet Entity data is available in most functionalities of Twitter API ME that involves *Tweet* class, i.e., posting, reposting, timelines and find. It is important to point out, that Search API does **not** return tweet entities, so you will not get any entity from *tweets* returned by *SearchDevice* class. For timelines, you need to specify in query parameter, that you the entities to be returned. In this case, just use the method *QueryComposer.includeEntities()*. It is necessary, since entities increase the volume of data transmitted from Twitter.
 
-To work with Tweet Entities, you will basically need to work with ''TweetEntity'' class.
+To work with Tweet Entities, you will basically need to work with *TweetEntity* class.
 
-'''- Get URLs from a ''tweet's'' enties:'''
-<pre name="java">
+* **Get URLs from a *tweet's* enties:**
+
+```java
 ...
 TweetEntity entity = tweet.getEntity();
 
@@ -793,10 +803,11 @@ if (entity != null) {
   }
 }
 ...
-</pre>
+```
 
-'''- Get hashtags from a ''tweet's'' enties:'''
-<pre name="java">
+* **Get hashtags from a *tweet's* enties:**
+
+```java
 ...
 TweetEntity entity = tweet.getEntity();
 
@@ -808,10 +819,12 @@ if (entity != null) {
   }
 }
 ...
-</pre>
+```
 
-'''- Get user mentions from a ''tweet's'' enties:'''
-<pre name="java">
+* **Get user mentions from a *tweet's* enties:**
+
+```
+```java
 ...
 TweetEntity entity = tweet.getEntity();
 
@@ -828,40 +841,44 @@ if (entity != null) {
   }
 }
 ...
-</pre>
+```
 
-If you are missing an important scenario that could also be presented here, please, <a href="mailto:support@twitterapime.com">let us know.</a>
+If you are missing an important scenario that could also be presented here, please, [let us know]("mailto:support@twitterapime.com).
 
-[[#tablecont|(back to top)]]
+## Donation
 
-= <span id="Donate">Donation</span> =
-In case of Twitter API ME has brought good benefits for you and/or your company, and because of that you would like to thank us for all our hard work. Please, feel free to donate us any amount, via PayPal, by clicking '''[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ernandes%40gmail%2ecom&lc=US&item_name=Twitter%20API%20ME%20Team&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest here]'''. It is easy and quick to do. In addition, this contribution will provide us more resources to keep up improving this API for you.
+In case of Twitter API ME has brought good benefits for you and/or your company, and because of that you would like to thank us for all our hard work. Please, feel free to donate us any amount, via PayPal, by clicking **[here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ernandes%40gmail%2ecom&lc=US&item_name=Twitter%20API%20ME%20Team&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest)**. It is easy and quick to do. In addition, this contribution will provide us more resources to keep up improving this API for you.
 
-[[#tablecont|(back to top)]]
+## Apps Powered by Twitter API ME
 
-= <span id="ExpSup">Express Support</span> =
-Twitter API ME is now offering a new support modality, called '''Express Support'''. Now you can have prompt response from our team for all your requests. For further information, access [[ExpressSupport|here]].
+See below some apps that are powered by Twitter API ME:
 
-[[#tablecont|(back to top)]]
+* [TwAPIme for Android](https://market.android.com/details?id=com.twapime.app)
+* [Sountracker](http://www.soundtracker.fm/)
+* [EcoTweet](http://www.ecotweet.com/)
+* [Meet Me For Dinner](http://java.net/projects/meet-me-sample)
+* [ZonaSnap](http://www.mobihand.com/product.asp?id=465276)
+* [TwStreet](https://market.android.com/details?id=com.emobtech.twstreet)
+* [Beer Buddy for BBM](https://market.android.com/details?id=com.mvt.twitter)
+* [Real Twiends](https://market.android.com/details?id=com.twapime.app)
+* [DeuterIDE](http://www.deuteride.com/)
 
-= <span id="AppsPowered">Apps Powered by Twitter API ME</span> =
-This project dedicates a page exclusively to promote apps that are powered by Twitter API ME. You will find a list of apps that opted to use this API to implement their integration with Twitter. For the full list, access [[AppsPowered|here]].
+## See Also
 
-[[#tablecont|(back to top)]]
+* [Twitter API (Libraries)](http://dev.twitter.com/pages/libraries)
 
-= <span id="SeeAlso">See Also</span> =
-* [http://dev.twitter.com/pages/libraries Twitter API (Libraries)]
+## References
 
-= <span id="References">References</span> =
-* [http://dev.twitter.com/ Twitter API]
-* [http://en.wikipedia.org/wiki/OAuth OAuth]
-* [http://en.wikipedia.org/wiki/Basic_access_authentication Basic access authentication]
-* [http://java.sun.com/javame/index.jsp Java Micro Edition]
-* [http://developer.android.com Android]
-* [http://kxml.sourceforge.net/kxml2 kXML 2]
-* [http://www.saxproject.org SAX]
+* [Twitter API](http://dev.twitter.com/)
+* [OAuth](http://en.wikipedia.org/wiki/OAuth)
+* [Basic access authentication](http://en.wikipedia.org/wiki/Basic_access_authentication)
+* [Java Micro Edition](http://java.sun.com/javame/index.jsp)
+* [Android](http://developer.android.com)
+* [kXML 2](http://kxml.sourceforge.net/kxml2)
+* [SAX](http://www.saxproject.org)
 
-= <span id="ExtLinks">External Links</span> =
-* [http://www.twitter.com Twitter Official Website]
-* [http://www.twitter.com/twapime Follow Twitter API ME]
-* [http://j2megroup.blogspot.com J2ME Group Blog]
+## External Links
+
+* [Twitter Official Website](http://www.twitter.com)
+* [Follow Twitter API ME](http://www.twitter.com/twapime)
+* [J2ME Group Blog](http://j2megroup.blogspot.com)
