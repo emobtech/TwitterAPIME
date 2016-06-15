@@ -1,6 +1,6 @@
 # Twitter API ME
 
-**Twitter API ME** is a compelling and well defined API for Java developers who wish to develop applications that provide any type of access to Twitter's services. The API provides support for the main and more popular services on Twitter, e.g., ''tweet'' searching and posting. Each provided functionality in turn is very straightforward to use, just like Twitter's philosophy itself.
+**Twitter API ME** is a compelling and well defined API for Java developers who wish to develop applications that provide any type of access to Twitter's services. The API provides support for the main and more popular services on Twitter, e.g., *tweet* searching and posting. Each provided functionality in turn is very straightforward to use, just like Twitter's philosophy itself.
 
 Another great characteristic of Twitter API ME is the capability of running on different Java platforms. In other words, you can use the API to write applications for Java SE, Java ME, Android, RIM or any other Java compliant platform.
 
@@ -8,7 +8,7 @@ Another great characteristic of Twitter API ME is the capability of running on d
 
 The history of Twitter API ME development is quite simple and short. Everything started on August/2009, during Ernandes' vacation. As he did not have many things to do and was very curious on Twitter, Ernandes decided to exercise his creative leisure designing and implementing an API to access Twitter's services. As an enthusiast of mobile development, he first decided to design an API for Java ME. However, he did not last much to change his mind and then decide to write an API to run on any Java platform.
 
-The first version took about two months to be released, since Ernandes just worked during his free time. On October 29th, the version 1.0 was published only providing the searching ''tweets'' functionality. As developers started to meet Twitter API ME, Ernandes continued to work on new functionalities, mainly the one for posting ''tweets''. Two months later, on Jan 5th, 2010, the version 1.1 was publishing, now supporting ''tweet'' posting.
+The first version took about two months to be released, since Ernandes just worked during his free time. On October 29th, the version 1.0 was published only providing the searching *tweets* functionality. As developers started to meet Twitter API ME, Ernandes continued to work on new functionalities, mainly the one for posting *tweets*. Two months later, on Jan 5th, 2010, the version 1.1 was publishing, now supporting *tweet* posting.
 
 ## Licensing
 
@@ -27,7 +27,7 @@ Version | Date | Contents
 1.5 | 10/31/2010 | 1. List of pending friends/followers request.<br/> 2. Report spam.<br/> 3. Retweets of me timeline.<br/> 4. Trend Topics search.<br/> 5. Tweet's entities.<br/> 6. Retrieval of access token from UserAccountManager class.
 1.4 | 08/29/2010 | 1. Single Access Token auth.<br/> 2. Geo-located tweets.<br/> 3. Friends/Followers list.<br/> 4. Update user profile.
 1.3 | 06/14/2010 | 1. xAuth support.<br/> 2. UTF-8 characters support.<br/> 3. Possibility to change service URLs used by API.
-1.2 | 04/28/2010 | 1. Tweet repost ("retweet").<br/> 2. Direct message posting and retrieval.<br/> 3. Friendship management (e.g. follow, block, etc.).<br/> 4. Timelines access.<br/> 5. Rate limit status access for Search API.
+1.2 | 04/28/2010 | 1. Tweet repost (*retweet*).<br/> 2. Direct message posting and retrieval.<br/> 3. Friendship management (e.g. follow, block, etc.).<br/> 4. Timelines access.<br/> 5. Rate limit status access for Search API.
 1.1 | 01/05/2010 | 1. Tweet post.<br/> 2. User account authentication.<br/> 3. Rate limit status access for REST API.<br/> 4. Android support.<br/> 5. Some bug fixes and optimizations.
 1.0 | 10/29/2009 | 1. Tweet search.<br/> 2. Java ME support.
 
@@ -37,15 +37,15 @@ Twitter API ME attempts to provide support for most functionalities available by
 
 Functionality | Description
 ------------- | -----------
-Tweet search* | Create your own queries and search for all "tweets" that match your criteria.
-Tweet post | Submit your "tweets" in a very easy and quick way. Inclusive with geo-location information.
-Tweet repost ("retweet") | Resubmit that interesting "tweet", so that your friends can also see it.
+Tweet search* | Create your own queries and search for all *tweets* that match your criteria.
+Tweet post | Submit your *tweets* in a very easy and quick way. Inclusive with geo-location information.
+Tweet repost (*retweet*) | Resubmit that interesting *tweet*, so that your friends can also see it.
 User account authentication | Check the credentials of a given user account via xAuth and OAuth.
 User account data access | Access the profile information (e.g. name, URL, location, etc.) of a given user account.
 Update user profile | Update user profile data, i.e., name, description, URL and location.
 Rate limit status access* | Check your current rate limit status (Search and REST API) and be aware of how many requests left.
-Direct Message sending | Submit your private "tweets" in a very easy and quick way.
-Timeline access | Access the main timelines (e.g. "Public*", "Home", "Mentions", ""Retweets of me",  etc.) and see what all your friends are texting.
+Direct Message sending | Submit your private *tweets* in a very easy and quick way.
+Timeline access | Access the main timelines (e.g. *Public**, *Home*, *Mentions*, *Retweets of me*,  etc.) and see what all your friends are texting.
 Friendship management | Manage (follow/block) who you follow and your followers. In addition, you can also access your friends/followers list.
 Report spam | Report a spammer user to Twitter.
 Trend Topics search* | Search for the most popular topics being discussed on Twitter.
@@ -108,63 +108,69 @@ The current three Java platforms supported by Twitter API ME are:
 
 In order to help you to quick learn how to work with Twitter API ME, here it goes some sample codes showing how to perform some common tasks.
 
-=== <span id="Search4Tweets">1. Search for Tweets</span> ===
-All samples below are related to ''tweet'' search functionality. Be aware that [https://dev.twitter.com/docs/api/1/get/search Twitter Search API] JUST returns popular and/or recent ''tweets''. In other words, do NOT expect to retrieve old ''tweets''.
+## 1. Search for Tweets
 
-'''- Search for ''tweets'' that contain the words "Twitter" and "API":'''
-<pre name="java">
+All samples below are related to *tweet* search functionality. Be aware that [Twitter Search API](https://dev.twitter.com/docs/api/1/get/search) JUST returns popular and/or recent *tweets*. In other words, do NOT expect to retrieve old *tweets*.
+
+* **Search for ''tweets'' that contain the words "Twitter" and "API":**
+
+```java
 ...
 SearchDevice s = SearchDevice.getInstance();
 Query q = QueryComposer.containAll("Twitter API");
 Tweet[] twts = s.searchTweets(q);
 ...
-</pre>
+```
 
-'''- Search for ''tweets'' that contain the words "Java" or "Android":'''
-<pre name="java">
+* **Search for ''tweets'' that contain the words "Java" or "Android":**
+
+```java
 ...
 SearchDevice s = SearchDevice.getInstance();
 Query q = QueryComposer.containAny("Java Android");
 Tweet[] twts = s.searchTweets(q);
 ...
-</pre>
+```
 
-'''- Search for the latest ''tweets'' from a given user, e.g., [http://twitter.com/#!/twapime @twapime]:'''
-<pre name="java">
+* **Search for the latest *tweets* from a given user, e.g., [@twapime](http://twitter.com/#!/twapime):**
+
+```java
 ...
 SearchDevice s = SearchDevice.getInstance();
 Query q = QueryComposer.from("twapime");
 Tweet[] twts = s.searchTweets(q);
 ...
-</pre>
+```
 
-'''- Search for the latest ''tweets'' from [http://twitter.com/#!/twapime @twapime] and contain the word "Java":'''
-<pre name="java">
+* **Search for the latest *tweets* from [@twapime](http://twitter.com/#!/twapime) and contain the word "Java":**
+
+```java
 ...
 SearchDevice s = SearchDevice.getInstance();
 Query q = QueryComposer.from("twapime");
 q = QueryComposer.append(QueryComposer.containAll("Java"));
 Tweet[] twts = s.searchTweets(q);
 ...
-</pre>
+```
 
-'''- Search for the latest five ''tweets'' related to the hashtag (trend) "#business":'''
-<pre name="java">
+* **Search for the latest five ''tweets'' related to the hashtag (trend) "#business":**
+
+```java
 ...
 SearchDevice s = SearchDevice.getInstance();
 Query q = QueryComposer.resultCount(5);
 q = QueryComposer.append(QueryComposer.containHastag("business"));
 Tweet[] twts = s.searchTweets(q);
 ...
-</pre>
+```
 
-[[#tablecont|(back to top)]]
+## 2. Authenticate User
 
-=== <span id="AuthUser">2. Authenticate User</span> ===
-All samples below are related to user's authentication process. Twitter API ME supports all authentication methods provided by Twitter API. You can find further information about those methods and their requirements on [[#AuthMethods|Authentication Methods]].
+All samples below are related to user's authentication process. Twitter API ME supports all authentication methods provided by Twitter API. You can find further information about those methods and their requirements on **Authentication Methods**.
 
-'''- Authenticate user with [[#AuthxAuth|xAuth]] method:'''
-<pre name="java">
+* **Authenticate user with xAuth method:**
+
+```java
 ...
 Credential c = new Credential("user_name", "password", "conKey", "conSecret");
 UserAccountManager m = UserAccountManager.getInstance(c);
@@ -175,12 +181,13 @@ if (m.verifyCredential()) {
   System.out.println("User name and/or password are invalid!");
 }
 ...
-</pre>
+```
 
-Do not forget to request xAuth privileges to your application, by sending an e-mail to [mailto:api@twitter.com api@twitter.com]. Otherwise, ''verifyCredential()'' will always return ''false''. On average, they have taken about a few days to respond.
+Do not forget to request xAuth privileges to your application, by sending an e-mail to [api@twitter.com](mailto:api@twitter.com). Otherwise, *verifyCredential()* will always return *false*. On average, they have taken about a few days to respond.
 
-'''- Authenticate user with [[#AuthSingleToken|Single Access Token]] method:'''
-<pre name="java">
+* **Authenticate user with Single Access Token method:**
+
+```java
 ...
 Token token = new Token("token_access", "token_secret");
 Credential c = new Credential("user_name", "conKey", "conSecret", token);
@@ -192,12 +199,13 @@ if (m.verifyCredential()) {
   System.out.println("Consumer or token keys are invalid!");
 }
 ...
-</pre>
+```
 
 You can get your "token_access" and "token_secret" on the same page as you get your app's "consumer key" and "consumer secret". Be aware that ALL requests to Twitter using this method will be on your behalf. In other words, you can log in with your user account only.
 
-'''- Authenticate user with [[#AuthOAuth|OAuth]] method:'''
-<pre name="java">
+* **Authenticate user with OAuth method:**
+
+```java
 ...
 //Snippet for Android.
 WebView webView = ...;
@@ -233,13 +241,12 @@ page.setOAuthListener(new OAuthDialogListener() {
 
 page.login(); //runs asynchronously.
 ...
-</pre>
+```
 
-To help you get started with OAuth as fast as possible, a sample app was implemented in all supported platforms, demonstrating how to integrate OAuth into your app. Get it from our [http://kenai.com/projects/twitterapime/downloads/directory/Miscellaneous download] section.
+To help you get started with OAuth as fast as possible, a sample app was implemented in all supported platforms, demonstrating how to integrate OAuth into your app. Get it from our [download](http://kenai.com/projects/twitterapime/downloads/directory/Miscellaneous) section.
 
-[[#tablecont|(back to top)]]
+## 3. Retrieve Rate Limit Status
 
-=== <span id="RetRateLimSts">3. Retrieve Rate Limit Status</span> ===
 All codes below are related to Twitter's rate limiting functionality, which you can keep tracking of current values via Twitter API ME. Twitter implements rate limits for both Search and REST API, in order to avoid attacks. For further information on rate limiting, access [http://dev.twitter.com/pages/rate-limiting Twitter API - Rate Limiting].
 
 In order to keep tracking of current status, Twitter API ME provides means to access both APIs status. For that, you will have to work with the following classes: ''SearchDevice'', ''UserAccountManager'' and ''RateLimitStatus''.
